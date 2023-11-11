@@ -47,14 +47,14 @@ void black_box_ascii_art() {
 		"                                                                                   \n";
 }
 
-void menu()
+void main_menu()
 {
 	black_box_ascii_art();
 	cout << "1. Start new game" << endl;
 	cout << "2. Exit" << endl;
 }
 
-void game_type()
+void game_size()
 {
 	cout << "1. 5x5" << endl;
 	cout << "2. 8x8" << endl;
@@ -62,7 +62,7 @@ void game_type()
 	cout << "4. Back" << endl;
 }
 
-void game_5x5()
+void game_5x5_atom_number()
 {
 	cout << "1. 3 atoms" << endl;
 	cout << "2. 4 atoms" << endl;
@@ -70,7 +70,7 @@ void game_5x5()
 	cout << "4. Back" << endl;
 }
 
-void game_8x8()
+void game_8x8_atom_number()
 {
 	cout << "1. 3 atoms" << endl;
 	cout << "2. 4 atoms" << endl;
@@ -81,7 +81,7 @@ void game_8x8()
 	cout << "7. Back" << endl;
 }
 
-void game_10x10()
+void game_10x10_atom_number()
 {
 	cout << "1. 3 atoms" << endl;
 	cout << "2. 4 atoms" << endl;
@@ -92,59 +92,74 @@ void game_10x10()
 	cout << "7. Back" << endl;
 }
 
-void draw_board_outside(int i) {
-	if (i == 1) {
-		cout << "  1 2 3 4 5" << endl;
-		cout << "1 - - - - -" << endl;
-		cout << "2 - - - - -" << endl;
-		cout << "3 - - - - -" << endl;
-		cout << "4 - - - - -" << endl;
-		cout << "5 - - - - -" << endl;
+void horizontal_separator(int size) {
+	for (int i = 0; i < 4 * (size + 1); ++i) {
+		cout << "-";
 	}
-	else if (i == 2) {
-		cout << "  1 2 3 4 5 6 7 8" << endl;
-		cout << "1 - - - - - - - -" << endl;
-		cout << "2 - - - - - - - -" << endl;
-		cout << "3 - - - - - - - -" << endl;
-		cout << "4 - - - - - - - -" << endl;
-		cout << "5 - - - - - - - -" << endl;
-		cout << "6 - - - - - - - -" << endl;
-		cout << "7 - - - - - - - -" << endl;
-		cout << "8 - - - - - - - -" << endl;
-	}
-	else if (i == 3) {
-		cout << "  1 2 3 4 5 6 7 8 9 10" << endl;
-		cout << "";
-	}
+	cout << "\n";
 }
 
-void draw_board(int i) {
+void header(int size) {
+	cout << setw(2) << " " << " |";
 
+	for (int col = 1; col <= size; ++col) {
+		cout << setw(2) << " " << col << " ";
+	}
+	cout << "\n";
+}
+
+void draw_board(int size, int atom_number) {
+	header(size);
+
+	horizontal_separator(size);
+
+	//Table body
+	for (int row = 1; row <= size; ++row) {
+		cout << setw(2) << row << " |";
+
+		for (int col = 1; col <= size; ++col) {
+			// Corners as X - atoms
+			if ((row == 1 && col == 1) || (row == 1 && col == size) ||
+				(row == size && col == 1) || (row == size && col == size)) {
+				cout << setw(4) << " X ";
+			}
+			else {
+				cout << setw(4) << " . ";
+			}
+		}
+
+		cout << "\n";
+
+		horizontal_separator(size);
+	}
 }
 
 int main()
 {
 	int choice{};
-	menu();
+	main_menu();
 	cin >> choice;
 	if (choice == 2)
 		return 0;
 	else if (choice == 1) {
 		system("cls");
-		game_type();
+		game_size();
 		cin >> choice;
 		if (choice == 1) {
 			system("cls");
-			game_5x5();
+			game_5x5_atom_number();
 			cin >> choice;
 			if (choice == 1) {
 				cout << "5x5 3 atoms" << endl;
+				draw_board(5, choice + 2);
 			}
 			else if (choice == 2) {
 				cout << "5x5 4 atoms" << endl;
+				draw_board(5, choice + 2);
 			}
 			else if (choice == 3) {
 				cout << "5x5 5 atoms" << endl;
+				draw_board(5, choice + 2);
 			}
 			else if (choice == 4) {
 				system("cls");
@@ -153,25 +168,31 @@ int main()
 		}
 		else if (choice == 2) {
 			system("cls");
-			game_8x8();
+			game_8x8_atom_number();
 			cin >> choice;
 			if (choice == 1) {
 				cout << "8x8 3 atoms" << endl;
+				draw_board(8, choice + 2);
 			}
 			else if (choice == 2) {
 				cout << "8x8 4 atoms" << endl;
+				draw_board(8, choice + 2);
 			}
 			else if (choice == 3) {
 				cout << "8x8 5 atoms" << endl;
+				draw_board(8, choice + 2);
 			}
 			else if (choice == 4) {
 				cout << "8x8 6 atoms" << endl;
+				draw_board(8, choice + 2);
 			}
 			else if (choice == 5) {
 				cout << "8x8 7 atoms" << endl;
+				draw_board(8, choice + 2);
 			}
 			else if (choice == 6) {
 				cout << "8x8 8 atoms" << endl;
+				draw_board(8, choice + 2);
 			}
 			else if (choice == 7) {
 				system("cls");
@@ -180,25 +201,31 @@ int main()
 		}
 		else if (choice == 3) {
 			system("cls");
-			game_10x10();
+			game_10x10_atom_number();
 			cin >> choice;
 			if (choice == 1) {
 				cout << "10x10 3 atoms" << endl;
+				draw_board(10, choice + 2);
 			}
 			else if (choice == 2) {
 				cout << "10x10 4 atoms" << endl;
+				draw_board(10, choice + 2);
 			}
 			else if (choice == 3) {
 				cout << "10x10 5 atoms" << endl;
+				draw_board(10, choice + 2);
 			}
 			else if (choice == 4) {
 				cout << "10x10 6 atoms" << endl;
+				draw_board(10, choice + 2);
 			}
 			else if (choice == 5) {
 				cout << "10x10 7 atoms" << endl;
+				draw_board(10, choice + 2);
 			}
 			else if (choice == 6) {
 				cout << "10x10 8 atoms" << endl;
+				draw_board(10, choice + 2);
 			}
 			else if (choice == 7) {
 				system("cls");
