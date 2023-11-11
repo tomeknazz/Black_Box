@@ -27,11 +27,6 @@ NOTE: the atoms are invisible to the player during the game!
 
 */
 
-
-
-
-
-
 #include <iostream>
 #include <iomanip>
 #include <conio.h>
@@ -67,7 +62,6 @@ void game_type()
 	cout << "4. Back" << endl;
 }
 
-
 void game_5x5()
 {
 	cout << "1. 3 atoms" << endl;
@@ -98,8 +92,30 @@ void game_10x10()
 	cout << "7. Back" << endl;
 }
 
-void draw_outside(int i) {
-
+void draw_board_outside(int i) {
+	if (i == 1) {
+		cout << "  1 2 3 4 5" << endl;
+		cout << "1 - - - - -" << endl;
+		cout << "2 - - - - -" << endl;
+		cout << "3 - - - - -" << endl;
+		cout << "4 - - - - -" << endl;
+		cout << "5 - - - - -" << endl;
+	}
+	else if (i == 2) {
+		cout << "  1 2 3 4 5 6 7 8" << endl;
+		cout << "1 - - - - - - - -" << endl;
+		cout << "2 - - - - - - - -" << endl;
+		cout << "3 - - - - - - - -" << endl;
+		cout << "4 - - - - - - - -" << endl;
+		cout << "5 - - - - - - - -" << endl;
+		cout << "6 - - - - - - - -" << endl;
+		cout << "7 - - - - - - - -" << endl;
+		cout << "8 - - - - - - - -" << endl;
+	}
+	else if (i == 3) {
+		cout << "  1 2 3 4 5 6 7 8 9 10" << endl;
+		cout << "";
+	}
 }
 
 void draw_board(int i) {
