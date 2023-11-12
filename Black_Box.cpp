@@ -35,6 +35,8 @@ NOTE: the atoms are invisible to the player during the game!
 
 using namespace std;
 
+int main();
+
 void black_box_ascii_art() {
 	cout <<
 		"______  _               _     ______                _____                         \n"
@@ -108,42 +110,44 @@ void header(int size) {
 	cout << "\n";
 }
 
-void place_X_in_random_position(int size, int& atom_number, int atom_positions[][2]) {
+void place_X_in_random_position(char*& array, int size, int atom_number) {
+	// Initialize the array with dots
+	for (int i = 0; i < size * size; ++i) {
+		array[i] = '.';
+	}
+
+	// Place 'X' in random positions
 	for (int i = 0; i < atom_number; ++i) {
-		atom_positions[i][0] = rand() % size + 1;
-		atom_positions[i][1] = rand() % size + 1;
+		int random_position = rand() % (size * size);
+		while (array[random_position] == 'X')
+		{
+			random_position = rand() % (size * size);
+		}
+		array[random_position] = 'X';
+
 	}
 }
 
 void draw_board(int size, int atom_number) {
+	//Dynamic array
+	char* board = new char[size * size];
+	place_X_in_random_position(board, size, atom_number);
+
 	header(size);
 
 	horizontal_separator(size);
-	//Dynamic array
-	int *atom_positions=new int[atom_number*2];
-
-	place_X_in_random_position(size, atom_number, atom_positions);
 
 	//Table body
-	for (int row = 1; row <= size; ++row) {
-		cout << setw(2) << row << " |";
+	for (int row = 0; row < size; ++row) {
+		cout << setw(2) << row + 1 << " |"; // Adjust row numbering
 
-		for (int col = 1; col <= size; ++col) {
-			int x, y;
-			place_X_in_random_position(size, atom_number, x, y);
-			if (atom_number > 0 && row == x && col == y) {
-				cout << setw(4) << " X ";
-			}
-			else {
-				cout << setw(4) << " . ";
-			}
+		for (int col = 0; col < size; ++col) {
+			cout << setw(4) << board[row * size + col];
 		}
-
-
 		cout << "\n";
-
 		horizontal_separator(size);
 	}
+	delete[] board;
 }
 
 
