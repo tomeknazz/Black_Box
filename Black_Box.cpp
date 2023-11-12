@@ -108,19 +108,30 @@ void header(int size) {
 	cout << "\n";
 }
 
+void place_X_in_random_position(int size, int& atom_number, int atom_positions[][2]) {
+	for (int i = 0; i < atom_number; ++i) {
+		atom_positions[i][0] = rand() % size + 1;
+		atom_positions[i][1] = rand() % size + 1;
+	}
+}
+
 void draw_board(int size, int atom_number) {
 	header(size);
 
 	horizontal_separator(size);
+	//Dynamic array
+	int *atom_positions=new int[atom_number*2];
+
+	place_X_in_random_position(size, atom_number, atom_positions);
 
 	//Table body
 	for (int row = 1; row <= size; ++row) {
 		cout << setw(2) << row << " |";
 
 		for (int col = 1; col <= size; ++col) {
-			// Corners as X - atoms
-			if ((row == 1 && col == 1) || (row == 1 && col == size) ||
-				(row == size && col == 1) || (row == size && col == size)) {
+			int x, y;
+			place_X_in_random_position(size, atom_number, x, y);
+			if (atom_number > 0 && row == x && col == y) {
 				cout << setw(4) << " X ";
 			}
 			else {
@@ -128,14 +139,18 @@ void draw_board(int size, int atom_number) {
 			}
 		}
 
+
 		cout << "\n";
 
 		horizontal_separator(size);
 	}
 }
 
+
+
 int main()
 {
+	srand(static_cast<unsigned int>(time(0)));
 	int choice{};
 	main_menu();
 	cin >> choice;
