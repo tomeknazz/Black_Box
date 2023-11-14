@@ -1,4 +1,4 @@
-//This program willbe an implementation of the Black Box game
+//This program will be an implementation of the Black Box game
 /*
 *
 Implementation of a console application allowing the Black Box game to be played. The application should
@@ -30,7 +30,7 @@ NOTE: the atoms are invisible to the player during the game!
 #include <iostream>
 #include <iomanip>
 #include <conio.h>
-#include<locale.h>
+#include<clocale>
 
 
 using namespace std;
@@ -64,7 +64,7 @@ void game_size()
 	cout << "4. Back" << endl;
 }
 
-void game_5x5_atom_number()
+void game_5_atom_number()
 {
 	cout << "1. 3 atoms" << endl;
 	cout << "2. 4 atoms" << endl;
@@ -72,7 +72,7 @@ void game_5x5_atom_number()
 	cout << "4. Back" << endl;
 }
 
-void game_8x8_atom_number()
+void game_8_atom_number()
 {
 	cout << "1. 3 atoms" << endl;
 	cout << "2. 4 atoms" << endl;
@@ -83,7 +83,7 @@ void game_8x8_atom_number()
 	cout << "7. Back" << endl;
 }
 
-void game_10x10_atom_number()
+void game_10_atom_number()
 {
 	cout << "1. 3 atoms" << endl;
 	cout << "2. 4 atoms" << endl;
@@ -94,14 +94,14 @@ void game_10x10_atom_number()
 	cout << "7. Back" << endl;
 }
 
-void horizontal_separator(int size) {
+void horizontal_separator(const int size) {
 	for (int i = 0; i < 4 * (size + 1); ++i) {
 		cout << "-";
 	}
 	cout << "\n";
 }
 
-void header(int size) {
+void header(const int size) {
 	cout << setw(2) << " " << " |";
 
 	for (int col = 1; col <= size; ++col) {
@@ -110,7 +110,7 @@ void header(int size) {
 	cout << "\n";
 }
 
-void place_X_in_random_position(char*& array, int size, int atom_number) {
+void place_x_in_random_position(char*& array, const int size, const int atom_number) {
 	// Initialize the array with dots
 	for (int i = 0; i < size * size; ++i) {
 		array[i] = '.';
@@ -128,10 +128,10 @@ void place_X_in_random_position(char*& array, int size, int atom_number) {
 	}
 }
 
-void draw_board(int size, int atom_number) {
+void draw_board(const int size, const int atom_number) {
 	//Dynamic array
-	char* board = new char[size * size];
-	place_X_in_random_position(board, size, atom_number);
+	auto board = new char[size * size];
+	place_x_in_random_position(board, size, atom_number);
 
 	header(size);
 
@@ -155,7 +155,7 @@ void draw_board(int size, int atom_number) {
 int main()
 {
 	srand(static_cast<unsigned int>(time(0)));
-	int choice{};
+	int choice;
 	main_menu();
 	cin >> choice;
 	if (choice == 2)
@@ -166,7 +166,7 @@ int main()
 		cin >> choice;
 		if (choice == 1) {
 			system("cls");
-			game_5x5_atom_number();
+			game_5_atom_number();
 			cin >> choice;
 			if (choice == 1) {
 				cout << "5x5 3 atoms" << endl;
@@ -187,7 +187,7 @@ int main()
 		}
 		else if (choice == 2) {
 			system("cls");
-			game_8x8_atom_number();
+			game_8_atom_number();
 			cin >> choice;
 			if (choice == 1) {
 				cout << "8x8 3 atoms" << endl;
@@ -220,7 +220,7 @@ int main()
 		}
 		else if (choice == 3) {
 			system("cls");
-			game_10x10_atom_number();
+			game_10_atom_number();
 			cin >> choice;
 			if (choice == 1) {
 				cout << "10x10 3 atoms" << endl;
