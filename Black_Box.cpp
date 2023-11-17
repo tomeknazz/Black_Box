@@ -29,8 +29,7 @@ NOTE: the atoms are invisible to the player during the game!
 
 #include <iostream>
 #include <iomanip>
-#include <conio.h>
-#include<clocale>
+//#include<clocale>
 
 
 using namespace std;
@@ -47,67 +46,6 @@ void black_box_ascii_art() {
 		"\\____/ |_| \\__,_| \\___||_|\\_\\ \\____/  \\___/ /_/\\_\\  \\____/ \\__,_||_| |_| |_| \\___|\n"
 		"        Tomasz Nazar                 s197613                    ACiR_3 \n"
 		"                                                                                   \n";
-}
-
-void main_menu()
-{
-	black_box_ascii_art();
-	cout << "1. Start new game" << endl;
-	cout << "2. Exit" << endl;
-}
-
-void game_size()
-{
-	cout << "1. 5x5" << endl;
-	cout << "2. 8x8" << endl;
-	cout << "3. 10x10" << endl;
-	cout << "4. Back" << endl;
-}
-
-void game_5_atom_number()
-{
-	cout << "1. 3 atoms" << endl;
-	cout << "2. 4 atoms" << endl;
-	cout << "3. 5 atoms" << endl;
-	cout << "4. Back" << endl;
-}
-
-void game_8_atom_number()
-{
-	cout << "1. 3 atoms" << endl;
-	cout << "2. 4 atoms" << endl;
-	cout << "3. 5 atoms" << endl;
-	cout << "4. 6 atoms" << endl;
-	cout << "5. 7 atoms" << endl;
-	cout << "6. 8 atoms" << endl;
-	cout << "7. Back" << endl;
-}
-
-void game_10_atom_number()
-{
-	cout << "1. 3 atoms" << endl;
-	cout << "2. 4 atoms" << endl;
-	cout << "3. 5 atoms" << endl;
-	cout << "4. 6 atoms" << endl;
-	cout << "5. 7 atoms" << endl;
-	cout << "6. 8 atoms" << endl;
-	cout << "7. Back" << endl;
-}
-
-void horizontal_separator(const int size) {
-	for (int i = 0; i < 4 * (size + 1); ++i) {
-		cout << "-";
-	}
-	cout << "\n";
-}
-
-void header(const int size) {
-	cout << setw(2) << " " << " |";
-
-	for (int col = 1; col <= size; ++col) {
-		cout << setw(2) << " " << col << " ";
-	}
-	cout << "\n";
 }
 
 void place_x_in_random_position(char*& array, const int size, const int atom_number) {
@@ -132,10 +70,18 @@ void draw_board(const int size, const int atom_number) {
 	//Dynamic array
 	auto board = new char[size * size];
 	place_x_in_random_position(board, size, atom_number);
+	//Header
+	cout << setw(2) << " " << " |";
 
-	header(size);
-
-	horizontal_separator(size);
+	for (int col = 1; col <= size; ++col) {
+		cout << setw(2) << " " << col << " ";
+	}
+	cout << "\n";
+	//Horizontal line
+	for (int i = 0; i < 4 * (size + 1); ++i) {
+		cout << "-";
+	}
+	cout << "\n";
 
 	//Table body
 	for (int row = 0; row < size; ++row) {
@@ -145,28 +91,29 @@ void draw_board(const int size, const int atom_number) {
 			cout << setw(4) << board[row * size + col];
 		}
 		cout << "\n";
-		horizontal_separator(size);
+		for (int i = 0; i < 4 * (size + 1); ++i) {
+			cout << "-";
+		}
+		cout << "\n";
 	}
 	delete[] board;
 }
 
-
-
-int main()
+void game_choice(int choice)
 {
-	srand(static_cast<unsigned int>(time(0)));
-	int choice;
-	main_menu();
-	cin >> choice;
-	if (choice == 2)
-		return 0;
-	else if (choice == 1) {
+	if (choice == 1) {
 		system("cls");
-		game_size();
+		cout << "1. 5x5" << endl;
+		cout << "2. 8x8" << endl;
+		cout << "3. 10x10" << endl;
+		cout << "4. Back" << endl;
 		cin >> choice;
 		if (choice == 1) {
 			system("cls");
-			game_5_atom_number();
+			cout << "1. 3 atoms" << endl;
+			cout << "2. 4 atoms" << endl;
+			cout << "3. 5 atoms" << endl;
+			cout << "4. Back" << endl;
 			cin >> choice;
 			if (choice == 1) {
 				cout << "5x5 3 atoms" << endl;
@@ -187,7 +134,13 @@ int main()
 		}
 		else if (choice == 2) {
 			system("cls");
-			game_8_atom_number();
+			cout << "1. 3 atoms" << endl;
+			cout << "2. 4 atoms" << endl;
+			cout << "3. 5 atoms" << endl;
+			cout << "4. 6 atoms" << endl;
+			cout << "5. 7 atoms" << endl;
+			cout << "6. 8 atoms" << endl;
+			cout << "7. Back" << endl;
 			cin >> choice;
 			if (choice == 1) {
 				cout << "8x8 3 atoms" << endl;
@@ -220,7 +173,13 @@ int main()
 		}
 		else if (choice == 3) {
 			system("cls");
-			game_10_atom_number();
+			cout << "1. 3 atoms" << endl;
+			cout << "2. 4 atoms" << endl;
+			cout << "3. 5 atoms" << endl;
+			cout << "4. 6 atoms" << endl;
+			cout << "5. 7 atoms" << endl;
+			cout << "6. 8 atoms" << endl;
+			cout << "7. Back" << endl;
 			cin >> choice;
 			if (choice == 1) {
 				cout << "10x10 3 atoms" << endl;
@@ -256,6 +215,21 @@ int main()
 			main();
 		}
 	}
-
 }
 
+int main()
+{
+	srand(static_cast<unsigned int>(time(NULL)));
+
+	black_box_ascii_art();
+	cout << "1. Start new game" << endl;
+	cout << "2. Exit" << endl;
+	int choice;
+	cin >> choice;
+	if (choice == 2)
+		return 0;
+	else
+		game_choice(choice);
+
+	return 0;
+}
