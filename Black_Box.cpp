@@ -25,6 +25,22 @@ it should be possible to go to the start menu, where you can:
 In addition to this, the player should be able to undo and redo moves previously undone.
 NOTE: the atoms are invisible to the player during the game!
 
+Program powinien wykorzystywac klawiature w nastepujacy sposob:
+• w, s, a, d i (W, S, A, D) – poruszanie sie po planszy odpowiednio: w gore, w dol, w lewo i
+prawo;
+• q, Q – wyjscie do menu glownego;
+• u, U – undo (cofnij ruch);
+• r, R – redo (powtorz cofniety ruch);
+• spacja oddanie strzalu (gdy kursor jest na dowolnej scianie);
+• o - na planszy umozliwia zaznaczenie przypuszczalnego polozenia atomu;
+• k – konczy rozgrywke i umozliwia wyswietlenie rozwiazania i liczby uzyskanych punktow
+(poprawnie znalezionych atomow);
+• p – umozliwia wyswietlenie rozwiazania (przerywa etap gry, brak mozliwosci kontynuowania
+tego etapu gry);
+• H – Help/Pomoc – pokazuje na chwile umieszczenie atomow na planszy
+• pozostale pozostaja do wyboru przez programiste; Klawisze sterujace powinny byc
+zatwierdzane klawiszem enter.
+
 */
 
 #include <iostream>
@@ -215,6 +231,20 @@ void game_choice(int choice)
 			main();
 		}
 	}
+}
+
+void controls()
+{
+	cout << "Controls:" << endl;
+	cout << "w, s, a, d - move the cursor up, down, left and right" << endl;
+	cout << "q, Q - exit to the main menu" << endl;
+	cout << "u, U - undo" << endl;
+	cout << "r, R - redo" << endl;
+	cout << "space - shoot" << endl;
+	cout << "o - mark the presumed position of the atom" << endl;
+	cout << "k - ends the game and allows you to display the solution" << endl;
+	cout << "p - display the solution (no possibility of continuing after pressed)" << endl;
+	cout << "H - help" << endl;
 }
 
 int main()
