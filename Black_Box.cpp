@@ -82,10 +82,10 @@ void place_x_in_random_position(char*& array, const int size, const int atom_num
 	}
 }
 
-void full_board_with_dots(const int size) {
+void full_board_with_dots(const int size, int cursor_row, int cursor_column) {
 	char* board = new char[(size + 2) * (size + 2)];
 	int counter = 0;
-	
+
 	// Fill the first row
 	for (int i = 0; i < size + 2; ++i) {
 		board[counter++] = ' ';
@@ -104,15 +104,17 @@ void full_board_with_dots(const int size) {
 	for (int i = 0; i < size + 2; ++i) {
 		board[counter++] = ' ';
 	}
-	board[0]='#';
-	for(int i=0;i<size+2;i++)
+	for (int i = 0; i < size + 2; i++)
 	{
 		for (int j = 0; j < size + 2; j++)
 		{
-						cout << setw(4)<<board[i * (size + 2) + j];
-						
+			if (i == cursor_row && j == cursor_column)
+				cout << setw(4) << '#';
+			else
+				cout << setw(4) << board[i * (size + 2) + j];
+
 		}
-		if(i!=size+1)
+		if (i != size + 1)
 		{
 			cout << "\n";
 			cout << setw(4) << '-';
@@ -122,7 +124,7 @@ void full_board_with_dots(const int size) {
 
 		}
 		cout << endl;
-	
+
 	}
 
 	delete[] board;
@@ -174,7 +176,7 @@ void draw_board_shown_atoms(const int size, const int atom_number)
 void draw_board_hidden_atoms(const int size) {
 	//Dynamic array
 	auto board_hidden_atoms = new char[(size + 2) * (size + 2)];
-	
+
 }
 
 void game_choice(int choice)
@@ -309,13 +311,98 @@ void display_controls()
 	cout << "H - help" << endl;
 }
 
+void movement_controls(int cursor_row, int cursor_column) {
+	while (true)
+	{
+		char key;
+		cin >> key;
+		if (key == 'w' || key == 'W')
+		{
+			if (cursor_row > 0)
+				cursor_row--;
+			system("cls");
+			full_board_with_dots(10, cursor_row, cursor_column);
+		}
+		else if (key == 's' || key == 'S')
+		{
+			if (cursor_row <= 10)
+				cursor_row++;
+			system("cls");
+			full_board_with_dots(10, cursor_row, cursor_column);
+		}
+		else if (key == 'a' || key == 'A')
+		{
+			if (cursor_column > 0)
+				cursor_column--;
+			system("cls");
+			full_board_with_dots(10, cursor_row, cursor_column);
+		}
+		else if (key == 'd' || key == 'D')
+		{
+			if (cursor_column <= 10)
+				cursor_column++;
+			system("cls");
+			full_board_with_dots(10, cursor_row, cursor_column);
+		}
+		else if (key == 'q' || key == 'Q')
+		{
+			system("cls");
+			main();
+		}
+		else if (key == 'u' || key == 'U')
+		{
+			system("cls");
+			main();
+		}
+		else if (key == 'r' || key == 'R')
+		{
+			system("cls");
+			main();
+		}
+		else if (key == ' ')
+		{
+			system("cls");
+			main();
+		}
+		else if (key == 'o' || key == 'O')
+		{
+			system("cls");
+			main();
+		}
+		else if (key == 'k' || key == 'K')
+		{
+			system("cls");
+			main();
+		}
+		else if (key == 'p' || key == 'P')
+		{
+			system("cls");
+			main();
+		}
+		else if (key == 'h' || key == 'H')
+		{
+			system("cls");
+			display_controls();
+			full_board_with_dots(10, cursor_row, cursor_column);
+		}
+		else
+		{
+			system("cls");
+			full_board_with_dots(10, cursor_row, cursor_column);
+		}
+	}
+}
+
 int main()
 {
 	srand(static_cast<unsigned int>(time(NULL)));
-	full_board_with_dots(10);
+
 	black_box_ascii_art();
 	cout << "1. Start new game" << endl;
 	cout << "2. Exit" << endl;
+
+	movement_controls(0, 0);
+
 	int choice;
 	cin >> choice;
 	if (choice == 2)
