@@ -82,37 +82,99 @@ void place_x_in_random_position(char*& array, const int size, const int atom_num
 	}
 }
 
-void draw_board(const int size, const int atom_number) {
-	//Dynamic array
-	auto board = new char[size * size];
-	place_x_in_random_position(board, size, atom_number);
-	//Header
-	cout << setw(2) << " " << " |";
+void full_board_with_dots(const int size) {
+	char* board = new char[(size + 2) * (size + 2)];
+	int counter = 0;
+	
+	// Fill the first row
+	for (int i = 0; i < size + 2; ++i) {
+		board[counter++] = ' ';
+	}
 
-	for (int col = 1; col <= size; ++col) {
-		cout << setw(2) << " " << col << " ";
+	// Fill the internal rows
+	for (int j = 0; j < size; ++j) {
+		board[counter++] = ' '; // Left space
+		for (int i = 0; i < size; ++i) {
+			board[counter++] = '.'; // Dots
+		}
+		board[counter++] = ' '; // Right space
+	}
+
+	// Fill the last row
+	for (int i = 0; i < size + 2; ++i) {
+		board[counter++] = ' ';
+	}
+	board[0]='#';
+	for(int i=0;i<size+2;i++)
+	{
+		for (int j = 0; j < size + 2; j++)
+		{
+						cout << setw(4)<<board[i * (size + 2) + j];
+						
+		}
+		if(i!=size+1)
+		{
+			cout << "\n";
+			cout << setw(4) << '-';
+			for (int i = 4; i < 4 * (size + 2); ++i) {
+				cout << "-";
+			}
+
+		}
+		cout << endl;
+	
+	}
+
+	delete[] board;
+}
+
+void draw_board_shown_atoms(const int size, const int atom_number)
+{
+	auto board_shown_atoms = new char[size * size];
+	place_x_in_random_position(board_shown_atoms, size, atom_number);
+	//Header
+	cout << setw(4) << ' ';
+
+	for (int col = 1; col <= size + 1; ++col) {
+		cout << setw(4) << ' ';
 	}
 	cout << "\n";
 	//Horizontal line
-	for (int i = 0; i < 4 * (size + 1); ++i) {
+	cout << setw(4) << '-';
+	for (int i = 4; i < 4 * (size + 2); ++i) {
 		cout << "-";
 	}
 	cout << "\n";
 
 	//Table body
 	for (int row = 0; row < size; ++row) {
-		cout << setw(2) << row + 1 << " |"; // Adjust row numbering
+		cout << setw(4) << ' '; // Adjust row numbering
 
 		for (int col = 0; col < size; ++col) {
-			cout << setw(4) << board[row * size + col];
+			cout << setw(4) << board_shown_atoms[row * size + col];
 		}
+		cout << setw(4) << ' ';
 		cout << "\n";
-		for (int i = 0; i < 4 * (size + 1); ++i) {
+		cout << setw(4) << '-';
+		for (int i = 4; i < 4 * (size + 2); ++i) {
 			cout << "-";
 		}
 		cout << "\n";
 	}
-	delete[] board;
+	//Header
+	cout << setw(4) << ' ';
+
+	for (int col = 1; col <= size + 1; ++col) {
+		cout << setw(4) << ' ';
+	}
+	cout << "\n";
+	delete[] board_shown_atoms;
+}
+
+void draw_board_hidden_atoms(const int size) {
+	//Dynamic array
+	auto board_hidden_atoms = new char[(size + 2) * (size + 2)];
+	
 }
 
 void game_choice(int choice)
@@ -133,15 +195,15 @@ void game_choice(int choice)
 			cin >> choice;
 			if (choice == 1) {
 				cout << "5x5 3 atoms" << endl;
-				draw_board(5, choice + 2);
+				draw_board_shown_atoms(5, choice + 2);
 			}
 			else if (choice == 2) {
 				cout << "5x5 4 atoms" << endl;
-				draw_board(5, choice + 2);
+				draw_board_shown_atoms(5, choice + 2);
 			}
 			else if (choice == 3) {
 				cout << "5x5 5 atoms" << endl;
-				draw_board(5, choice + 2);
+				draw_board_shown_atoms(5, choice + 2);
 			}
 			else if (choice == 4) {
 				system("cls");
@@ -160,27 +222,27 @@ void game_choice(int choice)
 			cin >> choice;
 			if (choice == 1) {
 				cout << "8x8 3 atoms" << endl;
-				draw_board(8, choice + 2);
+				draw_board_shown_atoms(8, choice + 2);
 			}
 			else if (choice == 2) {
 				cout << "8x8 4 atoms" << endl;
-				draw_board(8, choice + 2);
+				draw_board_shown_atoms(8, choice + 2);
 			}
 			else if (choice == 3) {
 				cout << "8x8 5 atoms" << endl;
-				draw_board(8, choice + 2);
+				draw_board_shown_atoms(8, choice + 2);
 			}
 			else if (choice == 4) {
 				cout << "8x8 6 atoms" << endl;
-				draw_board(8, choice + 2);
+				draw_board_shown_atoms(8, choice + 2);
 			}
 			else if (choice == 5) {
 				cout << "8x8 7 atoms" << endl;
-				draw_board(8, choice + 2);
+				draw_board_shown_atoms(8, choice + 2);
 			}
 			else if (choice == 6) {
 				cout << "8x8 8 atoms" << endl;
-				draw_board(8, choice + 2);
+				draw_board_shown_atoms(8, choice + 2);
 			}
 			else if (choice == 7) {
 				system("cls");
@@ -199,27 +261,27 @@ void game_choice(int choice)
 			cin >> choice;
 			if (choice == 1) {
 				cout << "10x10 3 atoms" << endl;
-				draw_board(10, choice + 2);
+				draw_board_shown_atoms(10, choice + 2);
 			}
 			else if (choice == 2) {
 				cout << "10x10 4 atoms" << endl;
-				draw_board(10, choice + 2);
+				draw_board_shown_atoms(10, choice + 2);
 			}
 			else if (choice == 3) {
 				cout << "10x10 5 atoms" << endl;
-				draw_board(10, choice + 2);
+				draw_board_shown_atoms(10, choice + 2);
 			}
 			else if (choice == 4) {
 				cout << "10x10 6 atoms" << endl;
-				draw_board(10, choice + 2);
+				draw_board_shown_atoms(10, choice + 2);
 			}
 			else if (choice == 5) {
 				cout << "10x10 7 atoms" << endl;
-				draw_board(10, choice + 2);
+				draw_board_shown_atoms(10, choice + 2);
 			}
 			else if (choice == 6) {
 				cout << "10x10 8 atoms" << endl;
-				draw_board(10, choice + 2);
+				draw_board_shown_atoms(10, choice + 2);
 			}
 			else if (choice == 7) {
 				system("cls");
@@ -233,7 +295,7 @@ void game_choice(int choice)
 	}
 }
 
-void controls()
+void display_controls()
 {
 	cout << "Controls:" << endl;
 	cout << "w, s, a, d - move the cursor up, down, left and right" << endl;
@@ -250,7 +312,7 @@ void controls()
 int main()
 {
 	srand(static_cast<unsigned int>(time(NULL)));
-
+	full_board_with_dots(10);
 	black_box_ascii_art();
 	cout << "1. Start new game" << endl;
 	cout << "2. Exit" << endl;
