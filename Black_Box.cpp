@@ -398,11 +398,11 @@ int main()
 	srand(static_cast<unsigned int>(time(NULL)));
 
 	black_box_ascii_art();
-	cout << "1. Start new game" << endl;
-	cout << "2. Exit" << endl;
 
 	movement_controls(0, 0);
 
+	cout << "1. Start new game" << endl;
+	cout << "2. Exit" << endl;
 	int choice;
 	cin >> choice;
 	if (choice == 2)
