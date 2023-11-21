@@ -45,11 +45,9 @@ zatwierdzane klawiszem enter.
 
 #include <iostream>
 #include <iomanip>
-//#include<clocale>
-
 
 using namespace std;
-//function prototype
+
 int main();
 
 char* game_board = nullptr;
@@ -248,17 +246,20 @@ void game_choice(int choice)
 			cout << "4. Back" << endl;
 			cin >> choice;
 			if (choice == 1) {
-				cout << "5x5 3 atoms" << endl;
+				system("cls");
+				cout << "Started game: 5x5 3 atoms" << endl;
 				create_random_game_array(game_board, 5, choice + 2);
 				initialize_game(0, 0, choice + 2, 5);
 			}
 			else if (choice == 2) {
-				cout << "5x5 4 atoms" << endl;
+				system("cls");
+				cout << "Started game: 5x5 4 atoms" << endl;
 				create_random_game_array(game_board, 5, choice + 2);
 				initialize_game(0, 0, choice + 2, 5);
 			}
 			else if (choice == 3) {
-				cout << "5x5 5 atoms" << endl;
+				system("cls");
+				cout << "Started game: 5x5 5 atoms" << endl;
 				create_random_game_array(game_board, 5, choice + 2);
 				initialize_game(0, 0, choice + 2, 5);
 			}
@@ -278,32 +279,38 @@ void game_choice(int choice)
 			cout << "7. Back" << endl;
 			cin >> choice;
 			if (choice == 1) {
-				cout << "8x8 3 atoms" << endl;
+				system("cls");
+				cout << "Started game: 8x8 3 atoms" << endl;
 				create_random_game_array(game_board, 8, choice + 2);
 				initialize_game(0, 0, choice + 2, 8);
 			}
 			else if (choice == 2) {
-				cout << "8x8 4 atoms" << endl;
+				system("cls");
+				cout << "Started game: 8x8 4 atoms" << endl;
 				create_random_game_array(game_board, 8, choice + 2);
 				initialize_game(0, 0, choice + 2, 8);
 			}
 			else if (choice == 3) {
-				cout << "8x8 5 atoms" << endl;
+				system("cls");
+				cout << "Started game: 8x8 5 atoms" << endl;
 				create_random_game_array(game_board, 8, choice + 2);
 				initialize_game(0, 0, choice + 2, 8);
 			}
 			else if (choice == 4) {
-				cout << "8x8 6 atoms" << endl;
+				system("cls");
+				cout << "Started game: 8x8 6 atoms" << endl;
 				create_random_game_array(game_board, 8, choice + 2);
 				initialize_game(0, 0, choice + 2, 8);
 			}
 			else if (choice == 5) {
-				cout << "8x8 7 atoms" << endl;
+				system("cls");
+				cout << "Started game: 8x8 7 atoms" << endl;
 				create_random_game_array(game_board, 8, choice + 2);
 				initialize_game(0, 0, choice + 2, 8);
 			}
 			else if (choice == 6) {
-				cout << "8x8 8 atoms" << endl;
+				system("cls");
+				cout << "Started game: 8x8 8 atoms" << endl;
 				create_random_game_array(game_board, 8, choice + 2);
 				initialize_game(0, 0, choice + 2, 8);
 			}
@@ -323,32 +330,38 @@ void game_choice(int choice)
 			cout << "7. Back" << endl;
 			cin >> choice;
 			if (choice == 1) {
-				cout << "10x10 3 atoms" << endl;
+				system("cls");
+				cout << "Started game: 10x10 3 atoms" << endl;
 				create_random_game_array(game_board, 10, choice + 2);
 				initialize_game(0, 0, choice + 2, 10);
 			}
 			else if (choice == 2) {
-				cout << "10x10 4 atoms" << endl;
+				system("cls");
+				cout << "Started game: 10x10 4 atoms" << endl;
 				create_random_game_array(game_board, 10, choice + 2);
 				initialize_game(0, 0, choice + 2, 10);
-			}
+			}			 
 			else if (choice == 3) {
-				cout << "10x10 5 atoms" << endl;
+				system("cls");
+				cout << "Started game: 10x10 5 atoms" << endl;
 				create_random_game_array(game_board, 10, choice + 2);
 				initialize_game(0, 0, choice + 2, 10);
-			}
+			}			 
 			else if (choice == 4) {
-				cout << "10x10 6 atoms" << endl;
+				system("cls");
+				cout << "Started game: 10x10 6 atoms" << endl;
 				create_random_game_array(game_board, 10, choice + 2);
 				initialize_game(0, 0, choice + 2, 10);
-			}
+			}			 
 			else if (choice == 5) {
-				cout << "10x10 7 atoms" << endl;
+				system("cls");
+				cout << "Started game: 10x10 7 atoms" << endl;
 				create_random_game_array(game_board, 10, choice + 2);
 				initialize_game(0, 0, choice + 2, 10);
-			}
+			}			 
 			else if (choice == 6) {
-				cout << "10x10 8 atoms" << endl;
+				system("cls");
+				cout << "Started game: 10x10 8 atoms" << endl;
 				create_random_game_array(game_board, 10, choice + 2);
 				initialize_game(0, 0, choice + 2, 10);
 			}
@@ -385,6 +398,6 @@ int main()
 		game_choice(choice);
 
 	}
-
+	delete[] game_board;
 	return 0;
 }
