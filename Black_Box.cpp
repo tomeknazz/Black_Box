@@ -52,7 +52,8 @@ int main();
 
 char* game_board = nullptr;
 
-void black_box_ascii_art() {
+void black_box_ascii_art()
+{
 	cout <<
 		"______  _               _     ______                _____                         \n"
 		"| ___ \\| |             | |    | ___ \\              |  __ \\                        \n"
@@ -64,18 +65,21 @@ void black_box_ascii_art() {
 		"                                                                                   \n";
 }
 
-void place_x_in_random_position(char*& array, const int size, const int atom_number) {
+void place_x_in_random_position(char*& array, const int size, const int atom_number)
+{
 	int remaining_x = atom_number;
 
 	// Place 'X' in random positions
-	while (remaining_x > 0) {
+	while (remaining_x > 0)
+	{
 		// Generate a random position
 		int randomPosition = rand() % (size * size) + 1;
 		int randomRow = (randomPosition - 1) / size + 1;
 		int randomCol = (randomPosition - 1) % size + 1;
 
 		// Check if the position is a dot and not already occupied by 'X'
-		if (array[randomRow * (size + 2) + randomCol] == '.') {
+		if (array[randomRow * (size + 2) + randomCol] == '.')
+		{
 			// Place 'X' at the random position
 			array[randomRow * (size + 2) + randomCol] = 'X';
 			--remaining_x;
@@ -103,9 +107,8 @@ void create_random_game_array(char*& array, const int size, const int atom_numbe
 	place_x_in_random_position(array, size, atom_number);
 }
 
-void full_board_with_dots(const char* board, const int size, const int cursor_row, const int cursor_column) {
-	
-
+void full_board_with_dots(const char* board, const int size, const int cursor_row, const int cursor_column)
+{
 	//Print table with cursor
 	for (int i = 0; i < size + 2; i++)
 	{
@@ -115,19 +118,17 @@ void full_board_with_dots(const char* board, const int size, const int cursor_ro
 				cout << setw(4) << '#';
 			else
 				cout << setw(4) << board[i * (size + 2) + j];
-
 		}
 		if (i != size + 1)
 		{
 			cout << "\n";
 			cout << setw(4) << '-';
-			for (int i = 4; i < 4 * (size + 2); ++i) {
+			for (int i = 4; i < 4 * (size + 2); ++i)
+			{
 				cout << "-";
 			}
-
 		}
 		cout << endl;
-
 	}
 }
 
@@ -145,7 +146,8 @@ void display_controls()
 	cout << "H - help" << endl;
 }
 
-void initialize_game(int cursor_row, int cursor_column, int atom_number, const int game_size) {
+void initialize_game(int cursor_row, int cursor_column, int atom_number, const int game_size)
+{
 	full_board_with_dots(game_board, game_size, cursor_row, cursor_column);
 	while (true)
 	{
@@ -156,14 +158,14 @@ void initialize_game(int cursor_row, int cursor_column, int atom_number, const i
 			if (cursor_row > 0)
 				cursor_row--;
 			system("cls");
-			full_board_with_dots(game_board,game_size, cursor_row, cursor_column);
+			full_board_with_dots(game_board, game_size, cursor_row, cursor_column);
 		}
 		else if (key == 's' || key == 'S')
 		{
 			if (cursor_row <= game_size)
 				cursor_row++;
 			system("cls");
-			full_board_with_dots(game_board,game_size, cursor_row, cursor_column);
+			full_board_with_dots(game_board, game_size, cursor_row, cursor_column);
 		}
 		else if (key == 'a' || key == 'A')
 		{
@@ -230,45 +232,51 @@ void initialize_game(int cursor_row, int cursor_column, int atom_number, const i
 
 void game_choice(int choice)
 {
-	
-	if (choice == 1) {
+	if (choice == 1)
+	{
 		system("cls");
 		cout << "1. 5x5" << endl;
 		cout << "2. 8x8" << endl;
 		cout << "3. 10x10" << endl;
 		cout << "4. Back" << endl;
 		cin >> choice;
-		if (choice == 1) {
+		if (choice == 1)
+		{
 			system("cls");
 			cout << "1. 3 atoms" << endl;
 			cout << "2. 4 atoms" << endl;
 			cout << "3. 5 atoms" << endl;
 			cout << "4. Back" << endl;
 			cin >> choice;
-			if (choice == 1) {
+			if (choice == 1)
+			{
 				system("cls");
 				cout << "Started game: 5x5 3 atoms" << endl;
 				create_random_game_array(game_board, 5, choice + 2);
 				initialize_game(0, 0, choice + 2, 5);
 			}
-			else if (choice == 2) {
+			else if (choice == 2)
+			{
 				system("cls");
 				cout << "Started game: 5x5 4 atoms" << endl;
 				create_random_game_array(game_board, 5, choice + 2);
 				initialize_game(0, 0, choice + 2, 5);
 			}
-			else if (choice == 3) {
+			else if (choice == 3)
+			{
 				system("cls");
 				cout << "Started game: 5x5 5 atoms" << endl;
 				create_random_game_array(game_board, 5, choice + 2);
 				initialize_game(0, 0, choice + 2, 5);
 			}
-			else if (choice == 4) {
+			else if (choice == 4)
+			{
 				system("cls");
 				main();
 			}
 		}
-		else if (choice == 2) {
+		else if (choice == 2)
+		{
 			system("cls");
 			cout << "1. 3 atoms" << endl;
 			cout << "2. 4 atoms" << endl;
@@ -278,48 +286,56 @@ void game_choice(int choice)
 			cout << "6. 8 atoms" << endl;
 			cout << "7. Back" << endl;
 			cin >> choice;
-			if (choice == 1) {
+			if (choice == 1)
+			{
 				system("cls");
 				cout << "Started game: 8x8 3 atoms" << endl;
 				create_random_game_array(game_board, 8, choice + 2);
 				initialize_game(0, 0, choice + 2, 8);
 			}
-			else if (choice == 2) {
+			else if (choice == 2)
+			{
 				system("cls");
 				cout << "Started game: 8x8 4 atoms" << endl;
 				create_random_game_array(game_board, 8, choice + 2);
 				initialize_game(0, 0, choice + 2, 8);
 			}
-			else if (choice == 3) {
+			else if (choice == 3)
+			{
 				system("cls");
 				cout << "Started game: 8x8 5 atoms" << endl;
 				create_random_game_array(game_board, 8, choice + 2);
 				initialize_game(0, 0, choice + 2, 8);
 			}
-			else if (choice == 4) {
+			else if (choice == 4)
+			{
 				system("cls");
 				cout << "Started game: 8x8 6 atoms" << endl;
 				create_random_game_array(game_board, 8, choice + 2);
 				initialize_game(0, 0, choice + 2, 8);
 			}
-			else if (choice == 5) {
+			else if (choice == 5)
+			{
 				system("cls");
 				cout << "Started game: 8x8 7 atoms" << endl;
 				create_random_game_array(game_board, 8, choice + 2);
 				initialize_game(0, 0, choice + 2, 8);
 			}
-			else if (choice == 6) {
+			else if (choice == 6)
+			{
 				system("cls");
 				cout << "Started game: 8x8 8 atoms" << endl;
 				create_random_game_array(game_board, 8, choice + 2);
 				initialize_game(0, 0, choice + 2, 8);
 			}
-			else if (choice == 7) {
+			else if (choice == 7)
+			{
 				system("cls");
 				main();
 			}
 		}
-		else if (choice == 3) {
+		else if (choice == 3)
+		{
 			system("cls");
 			cout << "1. 3 atoms" << endl;
 			cout << "2. 4 atoms" << endl;
@@ -329,48 +345,56 @@ void game_choice(int choice)
 			cout << "6. 8 atoms" << endl;
 			cout << "7. Back" << endl;
 			cin >> choice;
-			if (choice == 1) {
+			if (choice == 1)
+			{
 				system("cls");
 				cout << "Started game: 10x10 3 atoms" << endl;
 				create_random_game_array(game_board, 10, choice + 2);
 				initialize_game(0, 0, choice + 2, 10);
 			}
-			else if (choice == 2) {
+			else if (choice == 2)
+			{
 				system("cls");
 				cout << "Started game: 10x10 4 atoms" << endl;
 				create_random_game_array(game_board, 10, choice + 2);
 				initialize_game(0, 0, choice + 2, 10);
-			}			 
-			else if (choice == 3) {
+			}
+			else if (choice == 3)
+			{
 				system("cls");
 				cout << "Started game: 10x10 5 atoms" << endl;
 				create_random_game_array(game_board, 10, choice + 2);
 				initialize_game(0, 0, choice + 2, 10);
-			}			 
-			else if (choice == 4) {
+			}
+			else if (choice == 4)
+			{
 				system("cls");
 				cout << "Started game: 10x10 6 atoms" << endl;
 				create_random_game_array(game_board, 10, choice + 2);
 				initialize_game(0, 0, choice + 2, 10);
-			}			 
-			else if (choice == 5) {
+			}
+			else if (choice == 5)
+			{
 				system("cls");
 				cout << "Started game: 10x10 7 atoms" << endl;
 				create_random_game_array(game_board, 10, choice + 2);
 				initialize_game(0, 0, choice + 2, 10);
-			}			 
-			else if (choice == 6) {
+			}
+			else if (choice == 6)
+			{
 				system("cls");
 				cout << "Started game: 10x10 8 atoms" << endl;
 				create_random_game_array(game_board, 10, choice + 2);
 				initialize_game(0, 0, choice + 2, 10);
 			}
-			else if (choice == 7) {
+			else if (choice == 7)
+			{
 				system("cls");
 				main();
 			}
 		}
-		else if (choice == 4) {
+		else if (choice == 4)
+		{
 			system("cls");
 			main();
 		}
@@ -379,7 +403,7 @@ void game_choice(int choice)
 
 int main()
 {
-	srand(time(NULL));
+	srand(time(nullptr));
 
 	black_box_ascii_art();
 
@@ -390,14 +414,8 @@ int main()
 	cin >> choice;
 	if (choice == 2)
 		return 0;
-	else
+	game_choice(choice);
 
-	{
-
-
-		game_choice(choice);
-
-	}
 	delete[] game_board;
 	return 0;
 }
