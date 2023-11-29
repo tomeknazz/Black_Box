@@ -146,6 +146,33 @@ void draw_board_hidden_atoms(const char* board, const int size, const int cursor
 	}
 }
 
+void move_left(char*& array, const int size, int& cursor_row, int& cursor_column)
+{
+		if (cursor_column > 0)
+		--cursor_column;
+}
+
+void move_right(char*& array, const int size, int& cursor_row, int& cursor_column)
+{
+			if (cursor_column < size + 1)
+		++cursor_column;
+}
+
+void move_up(char*& array, const int size, int& cursor_row, int& cursor_column)
+{
+			if (cursor_row > 0)
+		--cursor_row;
+}
+
+void move_down(char*& array, const int size, int& cursor_row, int& cursor_column)
+{
+				if (cursor_row < size + 1)
+		++cursor_row;
+}
+
+void check_if_atom();
+
+
 void shoot_beam_from_side(char*& array, const int size, const int cursor_row, const int cursor_column)
 {
 	// Check if the cursor is on the top side
