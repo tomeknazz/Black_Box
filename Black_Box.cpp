@@ -3,7 +3,7 @@
 *
 Implementation of a console application allowing the Black Box game to be played. The application should
 allow to play several stages of varying difficulty. The stages differ in the size of the board and
-number of hidden atoms. The boards can be 5×5, 8×8, 10×10. The number of atoms can be
+number of hidden atoms. The boards can be 5Ã—5, 8Ã—8, 10Ã—10. The number of atoms can be
 from 3 (for the smallest board) to 8 for the largest board. The atoms hidden on the board should be
 arranged in a random manner. For each stage, the screen should display the number of
 of hidden atoms. Shots towards the atoms can be taken from the position of each wall. Each shot
@@ -26,19 +26,19 @@ In addition to this, the player should be able to undo and redo moves previously
 NOTE: the atoms are invisible to the player during the game!
 
 Program powinien wykorzystywac klawiature w nastepujacy sposob:
-• w, s, a, d i (W, S, A, D) – poruszanie sie po planszy odpowiednio: w gore, w dol, w lewo i
+â€¢ w, s, a, d i (W, S, A, D) â€“ poruszanie sie po planszy odpowiednio: w gore, w dol, w lewo i
 prawo;
-• q, Q – wyjscie do menu glownego;
-• u, U – undo (cofnij ruch);
-• r, R – redo (powtorz cofniety ruch);
-• spacja oddanie strzalu (gdy kursor jest na dowolnej scianie);
-• o - na planszy umozliwia zaznaczenie przypuszczalnego polozenia atomu;
-• k – konczy rozgrywke i umozliwia wyswietlenie rozwiazania i liczby uzyskanych punktow
+â€¢ q, Q â€“ wyjscie do menu glownego;
+â€¢ u, U â€“ undo (cofnij ruch);
+â€¢ r, R â€“ redo (powtorz cofniety ruch);
+â€¢ spacja oddanie strzalu (gdy kursor jest na dowolnej scianie);
+â€¢ o - na planszy umozliwia zaznaczenie przypuszczalnego polozenia atomu;
+â€¢ k â€“ konczy rozgrywke i umozliwia wyswietlenie rozwiazania i liczby uzyskanych punktow
 (poprawnie znalezionych atomow);
-• p – umozliwia wyswietlenie rozwiazania (przerywa etap gry, brak mozliwosci kontynuowania
+â€¢ p â€“ umozliwia wyswietlenie rozwiazania (przerywa etap gry, brak mozliwosci kontynuowania
 tego etapu gry);
-• H – Help/Pomoc – pokazuje na chwile umieszczenie atomow na planszy
-• pozostale pozostaja do wyboru przez programiste; Klawisze sterujace powinny byc
+â€¢ H â€“ Help/Pomoc â€“ pokazuje na chwile umieszczenie atomow na planszy
+â€¢ pozostale pozostaja do wyboru przez programiste; Klawisze sterujace powinny byc
 zatwierdzane klawiszem enter.
 
 */
@@ -494,6 +494,11 @@ void game_choice(char*& game_board, int choice)
 		}
 	}
 }
+
+#if _WIN32
+	system("cls");
+#else
+	system("clear");
 
 
 
