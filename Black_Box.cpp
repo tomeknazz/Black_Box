@@ -246,7 +246,6 @@ void shoot_beam_from_side(char*& array, const int size, const int cursor_row, co
 
 }
 
-
 void initialize_game(char*& game_board, int cursor_row, int cursor_column, int atom_number, const int game_size)
 {
 	draw_board_hidden_atoms(game_board, game_size, cursor_row, cursor_column);
@@ -526,7 +525,6 @@ int main()
 {
 	char* game_board = nullptr;
 	srand(time(nullptr));
-
 	menu(game_board);
 	cout << "END OF GAME";
 	delete[] game_board;
