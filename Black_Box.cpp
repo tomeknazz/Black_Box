@@ -363,6 +363,10 @@ void initialize_game(char* game_board, int cursor_row, int cursor_column, int ga
 	{
 		cin.getline(key, 2);
 
+
+		//tutaj wstawic ifa zeby usunac reszte historii w gore jesli cos sie zmieni wzgledem redo
+
+
 		if (key[0] == 'w' || key[0] == 'W')//move up
 		{
 			if (cursor_row > 0)
@@ -419,8 +423,7 @@ void initialize_game(char* game_board, int cursor_row, int cursor_column, int ga
 		{
 			redo(history, history_size, redo_history, redo_history_size, cursor_row, cursor_column);
 			draw_board_hidden_atoms(history[history_size - 1].game_board, game_size, cursor_row, cursor_column, history[history_size - 1].presumed_positions);
-			cursor_row = history[history_size - 1].cursor_row;
-			cursor_column = history[history_size - 1].cursor_column;
+
 		}
 		else if (key[0] == 'o' || key[0] == 'O')//mark the presumed position of the atom
 		{
