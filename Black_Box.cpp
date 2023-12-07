@@ -6,8 +6,8 @@ using namespace std;
 
 struct game_state
 {
-	string* game_board;
-	string* presumed_positions;
+	string game_board;
+	string presumed_positions;
 	int cursor_row;
 	int cursor_column;
 };
@@ -444,11 +444,11 @@ void draw_board_shown_atoms(const string* game_board, const int size)
 	}
 }
 
-string* convert_pointer_to_string(const string* pointer, const int game_size)
+string convert_pointer_to_string(const string* pointer, const int game_size)
 {
-	string* game_board=new string[(game_size+2)*(game_size+2)];
+	string game_board;
 	for (int i = 0; i < (game_size + 2) * (game_size + 2); i++)
-		game_board[i] += pointer[i];
+		game_board += pointer[i];
 	return game_board;
 }
 
@@ -456,8 +456,8 @@ void initialize_game(string* game_board, int cursor_row, int cursor_column, cons
 {
 	// Initialize the first game state
 	game_state* history = new game_state[5];
-	history[0].game_board = game_board;
-	history[0].presumed_positions = presumed_positions;
+	history[0].game_board = convert_pointer_to_string(game_board,game_size);
+	history[0].presumed_positions = convert_pointer_to_string(presumed_positions,game_size);
 	history[0].cursor_row = cursor_row;
 	history[0].cursor_column = cursor_column;
 	//first history to be changed
@@ -553,37 +553,14 @@ void initialize_game(string* game_board, int cursor_row, int cursor_column, cons
 				//show past table
 				history_index = 4;
 				history_cnt--;
-				string* temp_board = new string[(game_size + 2) * (game_size + 2)];
-				*temp_board = history[history_index].game_board;
-				string* temp_positions = new string[(game_size + 2) * (game_size + 2)];
-				*temp_positions = history[history_index].presumed_positions;
-				cout << "Showing past table" << endl;
-				cout << history[history_index].game_board << endl;
-				cout << history[history_index].cursor_column << endl;
-				cout << history[history_index].cursor_row << endl;
-				cout << "INdex: " << history_index << endl;
-				cin.get();
-				draw_board_hidden_atoms(temp_board, game_size, history[history_index].cursor_row, history[history_index].cursor_column, temp_positions);
-				delete[] temp_board;
-				delete[] temp_positions;
+				//draw_board_hidden_atoms(history[history_index].game_board, game_size, history[history_index].cursor_row, history[history_index].cursor_column,history[history_index].presumed_positions);
 			}
 			else
 			{
 				history_index--;
 				history_cnt--;
-				string* temp_board = new string[(game_size + 2) * (game_size + 2)];
-				*temp_board =history[history_index].game_board;
-				string* temp_positions = new string[(game_size + 2) * (game_size + 2)];
-				*temp_positions = history[history_index].presumed_positions;
-				cout << "Showing past table" << endl;
-				cout << history[history_index].game_board << endl;
-				cout << history[history_index].cursor_column << endl;
-				cout << history[history_index].cursor_row << endl;
-				cout<< "Index: "<<history_index << endl;
-				cin.get();
-				draw_board_hidden_atoms(temp_board, game_size, history[history_index].cursor_row, history[history_index].cursor_column, temp_positions);
-				delete[] temp_board;
-				delete[] temp_positions;
+				
+				//draw_board_hidden_atoms(history[history_index].game_board, game_size, history[history_index].cursor_row, history[history_index].cursor_column, history[history_index].presumed_positions);
 			}
 		}
 		else if (key[0] == 'r' || key[0] == 'R')//redo
