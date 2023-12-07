@@ -444,32 +444,32 @@ void draw_board_shown_atoms(const string* game_board, const int size)
 	}
 }
 
-string convert_pointer_to_string(const string* pointer, const int game_size)
+string* convert_pointer_to_string(const string* pointer, const int game_size)
 {
-	string game_board;
-	for (int i = 0; i <= (game_size + 2) * (game_size + 2); i++)
-		game_board += pointer[i];
+	string* game_board=new string[(game_size+2)*(game_size+2)];
+	for (int i = 0; i < (game_size + 2) * (game_size + 2); i++)
+		game_board[i] += pointer[i];
 	return game_board;
 }
 
 void initialize_game(string* game_board, int cursor_row, int cursor_column, const int game_size, string* presumed_positions)
 {
 	// Initialize the first game state
-	/*
 	game_state* history = new game_state[5];
 	history[0].game_board = game_board;
 	history[0].presumed_positions = presumed_positions;
 	history[0].cursor_row = cursor_row;
 	history[0].cursor_column = cursor_column;
-	history[1] = history[0];
-	draw_board_hidden_atoms(history[0].game_board, game_size, cursor_row, cursor_column, history[0].presumed_positions);
+	//first history to be changed
+
+	//draw_board_hidden_atoms(history[0].game_board, game_size, cursor_row, cursor_column, history[0].presumed_positions);
 	int history_index = 1;
 	int history_cnt = 0;
-	*/
 	bool invalid_move = false;
 	draw_board_hidden_atoms(game_board, game_size, cursor_row, cursor_column, presumed_positions);
 	while (true)
 	{
+		invalid_move = false;
 		char key[2];
 		cin.getline(key, 2);
 		if (key[0] == '\0')
@@ -543,23 +543,48 @@ void initialize_game(string* game_board, int cursor_row, int cursor_column, cons
 		else if (key[0] == 'u' || key[0] == 'U')//undo
 		{
 
-			/*if (history_cnt == 0)
+			if (history_cnt == 0)
 			{
 				invalid_move = true;
 				continue;
 			}
 			if (history_index == 0 and history_cnt != 0)
 			{
+				//show past table
 				history_index = 4;
 				history_cnt--;
-				draw_board_hidden_atoms(history[history_index].game_board, game_size, history[history_index].cursor_row, history[history_index].cursor_column, history[history_index].presumed_positions);
+				string* temp_board = new string[(game_size + 2) * (game_size + 2)];
+				*temp_board = history[history_index].game_board;
+				string* temp_positions = new string[(game_size + 2) * (game_size + 2)];
+				*temp_positions = history[history_index].presumed_positions;
+				cout << "Showing past table" << endl;
+				cout << history[history_index].game_board << endl;
+				cout << history[history_index].cursor_column << endl;
+				cout << history[history_index].cursor_row << endl;
+				cout << "INdex: " << history_index << endl;
+				cin.get();
+				draw_board_hidden_atoms(temp_board, game_size, history[history_index].cursor_row, history[history_index].cursor_column, temp_positions);
+				delete[] temp_board;
+				delete[] temp_positions;
 			}
 			else
 			{
 				history_index--;
 				history_cnt--;
-				draw_board_hidden_atoms(history[history_index].game_board, game_size, history[history_index].cursor_row, history[history_index].cursor_column, history[history_index].presumed_positions);
-			}*/
+				string* temp_board = new string[(game_size + 2) * (game_size + 2)];
+				*temp_board =history[history_index].game_board;
+				string* temp_positions = new string[(game_size + 2) * (game_size + 2)];
+				*temp_positions = history[history_index].presumed_positions;
+				cout << "Showing past table" << endl;
+				cout << history[history_index].game_board << endl;
+				cout << history[history_index].cursor_column << endl;
+				cout << history[history_index].cursor_row << endl;
+				cout<< "Index: "<<history_index << endl;
+				cin.get();
+				draw_board_hidden_atoms(temp_board, game_size, history[history_index].cursor_row, history[history_index].cursor_column, temp_positions);
+				delete[] temp_board;
+				delete[] temp_positions;
+			}
 		}
 		else if (key[0] == 'r' || key[0] == 'R')//redo
 		{
@@ -637,21 +662,17 @@ void initialize_game(string* game_board, int cursor_row, int cursor_column, cons
 			invalid_move = false;
 			continue;
 		}
-		/*history_cnt++;
+		cout << history_index << endl;
+		//save current state
+		history[history_index].game_board = convert_pointer_to_string(game_board, game_size);
+		history[history_index].presumed_positions = convert_pointer_to_string(presumed_positions, game_size);
+		history[history_index].cursor_row = cursor_row;
+		history[history_index].cursor_column = cursor_column;
+
+		history_cnt++;
 		history_index++;
 		history_index = history_index % 5;
-		if (history_index == 0)
-		{
-			history[history_index].game_board = history[4].game_board;
-			history[history_index].presumed_positions = history[4].presumed_positions;
-		}
-		else
-		{
-			history[history_index].game_board = history[history_index - 1].game_board;
-			history[history_index].presumed_positions = history[history_index - 1].presumed_positions;
-		}
-		history[history_index].cursor_row = cursor_row;
-		history[history_index].cursor_column = cursor_column;*/
+		cout << history_index << endl;
 
 
 	}
