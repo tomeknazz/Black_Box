@@ -106,7 +106,7 @@ void create_random_game_array(string*& array, const int size, const int atom_num
 	place_x_in_random_position(array, size, atom_number);
 }
 
-void draw_board_hidden_atoms(const string* board, const int size, const int cursor_row, const int cursor_column, string* presumed_positions)
+void draw_board_hidden_atoms(string*& board, const int size, const int cursor_row, const int cursor_column, string*& presumed_positions)
 {
 
 	clear_screen();
@@ -122,9 +122,9 @@ void draw_board_hidden_atoms(const string* board, const int size, const int curs
 			else if (board[i * (size + 2) + j] == "X")
 				cout << setw(4) << '.';
 			else if (board[i * (size + 2) + j] == "H")
-			{
 				cout << setw(4) << presumed_positions[i * (size + 2) + j];
-			}
+			else if (board[i * (size + 2) + j] == "R")
+				cout << setw(4) << presumed_positions[i * (size + 2) + j];
 			else
 				cout << setw(4) << board[i * (size + 2) + j];
 		}
@@ -172,50 +172,214 @@ void check_if_reflection();
 
  */
 
-void shoot_beam_from_side(string*& array, const int size, const int cursor_row, const int cursor_column, string*& positions)
+void reflect_left();
+void reflect_right();
+void reflect_up();
+void reflect_down();
+
+void check_for_edge_scenarios(string*& array, const int game_size, const int cursor_row, const int cursor_column, string*& positions, const string& beam_nr, const string& shot_from)
 {
 	string h = "H";
+	string r = "R";
+	if (shot_from == "top")
+	{
+		//check for hit near the edge
+		if (array[game_size + 2 + cursor_column] == "X")
+		{
+			// Mark the hit atom
+			positions[cursor_column] = h.append(beam_nr);
+			array[cursor_column] = 'H';
+		}
+		//check for atom near the edge
+		if (array[game_size + 2 + cursor_column - 1] == "X" or array[game_size + 2 + cursor_column + 1] == "X")
+		{
+			positions[cursor_column] = r.append(beam_nr);
+			array[cursor_column] = 'R';
+		}
+	}
+	else if (shot_from == "bottom")
+	{
+		//check for hit near the edge
+		if (array[cursor_column + (game_size + 1) * game_size] == "X")
+		{
+			// Mark the hit atom
+			positions[cursor_column + (game_size + 2) * (game_size + 1)] = h.append(beam_nr);
+			array[cursor_column + (game_size + 2) * (game_size + 1)] = 'H';
+		}
+		//check for atom near the edge
+		else if (array[cursor_column + (game_size + 2) * game_size - 1] == "X" or array[cursor_column + (game_size + 2) * game_size + 1] == "X")
+		{
+			positions[cursor_column + (game_size + 2) * (game_size + 1)] = r.append(beam_nr);
+			array[cursor_column + (game_size + 2) * (game_size + 1)] = 'R';
+		}
+	}
+	else if (shot_from == "left")
+	{
+		//check for hit near the edge
+		if (array[cursor_row * (game_size + 2) + 1] == "X")
+		{
+			// Mark the hit atom
+			positions[cursor_row * (game_size + 2)] = h.append(beam_nr);
+			array[cursor_row * (game_size + 2)] = 'H';
+		}
+		//check for atom near the edge
+		else if (array[(cursor_row - 1) * (game_size + 2) + 1] == "X" or array[(cursor_row + 1) * (game_size + 2) + 1] == "X")
+		{
+			positions[cursor_row * (game_size + 2)] = r.append(beam_nr);
+			array[cursor_row * (game_size + 2)] = 'R';
+		}
+	}
+	else if (shot_from == "right")
+	{
+		//check for hit near the edge
+		if (array[game_size + 2 + cursor_column] == "X")
+		{
+			// Mark the hit atom
+			positions[cursor_column] = h.append(beam_nr);
+			array[cursor_column] = 'H';
+		}
+		//check for atom near the edge
+		if (array[game_size + 2 + cursor_column - 1] == "X" or array[game_size + 2 + cursor_column + 1] == "X")
+		{
+			positions[cursor_column] = r.append(beam_nr);
+			array[cursor_column] = 'R';
+		}
+	}
+
+}
+
+void check_for_reflection(string*& array, const int game_size, const int cursor_row, const int cursor_column, string*& positions, const string& beam, const string& shot_from)
+{
+	string h = "H";
+	string r = "R";
+	if (shot_from == "top")
+	{
+		//check for hit near the edge
+		if (array[game_size + 2 + cursor_column] == "X")
+		{
+			// Mark the hit atom
+			positions[cursor_column] = h.append(beam);
+			array[cursor_column] = 'H';
+		}
+		//check for atom near the edge
+		if (array[game_size + 2 + cursor_column - 1] == "X" or array[game_size + 2 + cursor_column + 1] == "X")
+		{
+			positions[cursor_column] = r.append(beam);
+			array[cursor_column] = 'R';
+		}
+	}
+	else if (shot_from == "bottom")
+	{
+		//check for hit near the edge
+		if (array[game_size + 2 + cursor_column] == "X")
+		{
+			// Mark the hit atom
+			positions[cursor_column] = h.append(beam);
+			array[cursor_column] = 'H';
+		}
+		//check for atom near the edge
+		if (array[game_size + 2 + cursor_column - 1] == "X" or array[game_size + 2 + cursor_column + 1] == "X")
+		{
+			positions[cursor_column] = r.append(beam);
+			array[cursor_column] = 'R';
+		}
+	}
+	else if (shot_from == "left")
+	{
+		//check for hit near the edge
+		if (array[game_size + 2 + cursor_column] == "X")
+		{
+			// Mark the hit atom
+			positions[cursor_column] = h.append(beam);
+			array[cursor_column] = 'H';
+		}
+		//check for atom near the edge
+		if (array[game_size + 2 + cursor_column - 1] == "X" or array[game_size + 2 + cursor_column + 1] == "X")
+		{
+			positions[cursor_column] = r.append(beam);
+			array[cursor_column] = 'R';
+		}
+	}
+	else if (shot_from == "right")
+	{
+		//check for hit
+	}
+}
+
+void shoot_beam(string*& array, const int size, const int cursor_row, const int cursor_column, string*& positions)
+{
+	string h = "H";
+	string r = "R";
 	static int beam_number = 1;
 	stringstream ss;
 	ss << beam_number;
-	string beam = ss.str();
+	const string beam = ss.str();
 	// Check if the cursor is on the top side
 	if (cursor_row == 0)
 	{
+		bool hit = false;
+
 		// Shoot beam from the top side
-		for (int i = 1; i <= size; ++i)
+		for (int i = 2; i <= size; ++i)
 		{
+			check_for_edge_scenarios(array, size, cursor_row, cursor_column, positions, beam, "top");
+			if (array[cursor_column] == "H" or array[cursor_column] == "R")
+			{
+				hit = true;
+				break;
+
+			}
+			check_for_reflection(array, size, cursor_row, cursor_column, positions, beam, "top");
 			// Check if the beam hits an atom
 			if (array[i * (size + 2) + cursor_column] == "X")
 			{
 				// Mark the hit atom
 				positions[cursor_column] = h.append(beam);
-				array[cursor_column] = "H";
-				beam_number++;
+				array[cursor_column] = 'H';
+				hit = true;
 				break;
 
 			}
-			// Check if the beam reflects from and atom
-
+			// Check if the beam reflects from atom
+		}
+		beam_number++;
+		if (!hit)
+		{
+			array[cursor_column] = beam;
+			array[cursor_column + (size + 2) * (size + 1)] = beam;
 		}
 	}
 	// Check if the cursor is on the bottom side
 	else if (cursor_row == size + 1)
 	{
-		// Shoot beam from the bottom side
-		for (int i = size; i >= 1; --i)
+		bool hit = false;
+
+		// Shoot beam from the top side
+		for (int i = 2; i <= size; ++i)
 		{
+			check_for_edge_scenarios(array, size, cursor_row, cursor_column, positions, beam, "bottom");
+			if (array[cursor_column + (size + 2) * (size + 1)] == "H" or array[cursor_column + (size + 2) * (size + 1)] == "R")
+			{
+				hit = true;
+				break;
+			}
+			check_for_reflection(array, size, cursor_row, cursor_column, positions, beam, "bottom");
 			// Check if the beam hits an atom
 			if (array[i * (size + 2) + cursor_column] == "X")
 			{
 				// Mark the hit atom
-				positions[cursor_row * (size + 2) + cursor_column] = h.append(beam);
-				array[cursor_row * (size + 2) + cursor_column] = "H";
-				beam_number++;
+				positions[cursor_column] = h.append(beam);
+				array[cursor_column + (size + 2) * (size + 1)] = 'H';
+				hit = true;
 				break;
 			}
-			// Check if the beam hits a reflection
-
+			// Check if the beam reflects from atom
+		}
+		beam_number++;
+		if (!hit)
+		{
+			array[cursor_column] = beam;
+			array[cursor_column + (size + 2) * (size + 1)] = beam;
 		}
 	}
 	// Check if the cursor is on the left side
@@ -229,7 +393,7 @@ void shoot_beam_from_side(string*& array, const int size, const int cursor_row, 
 			{
 				// Mark the hit atom
 				positions[cursor_row * (size + 2)] = h.append(beam);
-				array[cursor_row * (size + 2)] = "H";
+				array[cursor_row * (size + 2)] = 'H';
 				beam_number++;
 				break;
 			}
@@ -245,7 +409,7 @@ void shoot_beam_from_side(string*& array, const int size, const int cursor_row, 
 			{
 				// Mark the hit atom
 				positions[(cursor_row + 1) * (size + 2) - 1] = h.append(beam);
-				array[(cursor_row + 1) * (size + 2) - 1] = "H";
+				array[(cursor_row + 1) * (size + 2) - 1] = 'H';
 				beam_number++;
 				break;
 			}
@@ -280,112 +444,97 @@ void draw_board_shown_atoms(const string* game_board, const int size)
 	}
 }
 
-void write_history(game_state*& history, int& history_size, string* game_board, int cursor_row, int cursor_column, string* presumed_positions)
+string convert_pointer_to_string(const string* pointer, const int game_size)
 {
-	history[history_size].game_board = game_board;
-	history[history_size].cursor_row = cursor_row;
-	history[history_size].cursor_column = cursor_column;
-	history[history_size].presumed_positions = presumed_positions;
-	history_size++;
+	string game_board;
+	for (int i = 0; i <= (game_size + 2) * (game_size + 2); i++)
+		game_board += pointer[i];
+	return game_board;
 }
 
-void undo(game_state*& history, int& history_size, game_state*& redo_history, int& redo_history_size, int& cursor_row, int& cursor_column)
+void initialize_game(string* game_board, int cursor_row, int cursor_column, const int game_size, string* presumed_positions)
 {
-	if (history_size > 1)
-	{
-		redo_history[redo_history_size] = history[history_size - 1];
-		redo_history_size++;
-		redo_history[redo_history_size - 1].game_board = history[history_size - 1].game_board;
-		redo_history[redo_history_size - 1].presumed_positions = history[history_size - 1].presumed_positions;
-		cursor_row = history[history_size - 1].cursor_row;
-		cursor_column = history[history_size - 1].cursor_column;
-		history_size--;
-	}
-}
-
-void redo(game_state*& history, int& history_size, game_state*& redo_history, int& redo_history_size, int& cursor_row, int& cursor_column)
-{
-	if (redo_history_size > 0)
-	{
-		history[history_size] = redo_history[redo_history_size - 1];
-		history_size++;
-		history[history_size - 1].game_board = redo_history[redo_history_size - 1].game_board;
-		history[history_size - 1].presumed_positions = redo_history[redo_history_size - 1].presumed_positions;
-		cursor_row = history[history_size - 1].cursor_row;
-		cursor_column = history[history_size - 1].cursor_column;
-		redo_history_size--;
-
-	}
-}
-
-void initialize_game(string* game_board, int cursor_row, int cursor_column, int game_size, string* presumed_positions)
-{
-	game_state* history = new game_state[100];
-	game_state* redo_history = new game_state[100];
-	int history_size = 1;
-	int redo_history_size = 0;
+	// Initialize the first game state
+	/*
+	game_state* history = new game_state[5];
 	history[0].game_board = game_board;
+	history[0].presumed_positions = presumed_positions;
 	history[0].cursor_row = cursor_row;
 	history[0].cursor_column = cursor_column;
-	history[0].presumed_positions = presumed_positions;
+	history[1] = history[0];
+	draw_board_hidden_atoms(history[0].game_board, game_size, cursor_row, cursor_column, history[0].presumed_positions);
+	int history_index = 1;
+	int history_cnt = 0;
+	*/
+	bool invalid_move = false;
 	draw_board_hidden_atoms(game_board, game_size, cursor_row, cursor_column, presumed_positions);
-	cout << history[0].game_board << endl;
-	cout << history[0].presumed_positions << endl;
-	int beam_number = 1;
-
 	while (true)
 	{
 		char key[2];
-
 		cin.getline(key, 2);
-
-
-
-		//TODO tutaj wstawic ifa zeby usunac reszte historii w gore jesli cos sie zmieni wzgledem redo
-
+		if (key[0] == '\0')
+			cin.getline(key, 2);
 
 		if (key[0] == 'w' || key[0] == 'W')//move up
 		{
 			if (cursor_row > 0)
-			{
 				cursor_row--;
-				write_history(history, history_size, game_board, cursor_row, cursor_column, presumed_positions);
+			else
+			{
+				invalid_move = true;
+				continue;
 			}
+
 			draw_board_hidden_atoms(game_board, game_size, cursor_row, cursor_column, presumed_positions);
 		}
 		else if (key[0] == 's' || key[0] == 'S')//move down
 		{
 			if (cursor_row <= game_size)
-			{
 				cursor_row++;
-				write_history(history, history_size, game_board, cursor_row, cursor_column, presumed_positions);
+			else
+			{
+				invalid_move = true;
+				continue;
 			}
+
 			draw_board_hidden_atoms(game_board, game_size, cursor_row, cursor_column, presumed_positions);
 		}
 		else if (key[0] == 'a' || key[0] == 'A')//move left
 		{
 			if (cursor_column > 0)
-			{
+
 				cursor_column--;
-				write_history(history, history_size, game_board, cursor_row, cursor_column, presumed_positions);
+			else
+			{
+				invalid_move = true;
+				continue;
 			}
 			draw_board_hidden_atoms(game_board, game_size, cursor_row, cursor_column, presumed_positions);
 		}
 		else if (key[0] == 'd' || key[0] == 'D')//move right
 		{
 			if (cursor_column <= game_size)
-			{
 				cursor_column++;
-				write_history(history, history_size, game_board, cursor_row, cursor_column, presumed_positions);
+			else
+			{
+				invalid_move = true;
+				continue;
 			}
 			draw_board_hidden_atoms(game_board, game_size, cursor_row, cursor_column, presumed_positions);
 		}
 		else if (key[0] == ' ')//shoot
 		{
-			clear_screen();
-			shoot_beam_from_side(game_board, game_size, cursor_row, cursor_column, presumed_positions);
-			draw_board_hidden_atoms(game_board, game_size, cursor_row, cursor_column, presumed_positions);
-			write_history(history, history_size, game_board, cursor_row, cursor_column, presumed_positions);
+			if (cursor_column == 0 or cursor_column == game_size + 1 or cursor_row == 0 or cursor_row == game_size + 1)
+			{
+				shoot_beam(game_board, game_size, cursor_row, cursor_column, presumed_positions);
+				draw_board_hidden_atoms(game_board, game_size, cursor_row, cursor_column, presumed_positions);
+
+			}
+			else
+			{
+				invalid_move = true;
+				continue;
+			}
 		}
 		else if (key[0] == 'q' || key[0] == 'Q')//exit to main menu
 		{
@@ -393,22 +542,42 @@ void initialize_game(string* game_board, int cursor_row, int cursor_column, int 
 		}
 		else if (key[0] == 'u' || key[0] == 'U')//undo
 		{
-			undo(history, history_size, redo_history, redo_history_size, cursor_row, cursor_column);
-			draw_board_hidden_atoms(history[history_size].game_board, game_size, cursor_row, cursor_column, history[history_size].presumed_positions);
+
+			/*if (history_cnt == 0)
+			{
+				invalid_move = true;
+				continue;
+			}
+			if (history_index == 0 and history_cnt != 0)
+			{
+				history_index = 4;
+				history_cnt--;
+				draw_board_hidden_atoms(history[history_index].game_board, game_size, history[history_index].cursor_row, history[history_index].cursor_column, history[history_index].presumed_positions);
+			}
+			else
+			{
+				history_index--;
+				history_cnt--;
+				draw_board_hidden_atoms(history[history_index].game_board, game_size, history[history_index].cursor_row, history[history_index].cursor_column, history[history_index].presumed_positions);
+			}*/
 		}
 		else if (key[0] == 'r' || key[0] == 'R')//redo
 		{
-			redo(history, history_size, redo_history, redo_history_size, cursor_row, cursor_column);
-			draw_board_hidden_atoms(history[history_size - 1].game_board, game_size, cursor_row, cursor_column, history[history_size - 1].presumed_positions);
+
+			//draw_board_hidden_atoms(game_board, game_size, cursor_row, cursor_column, presumed_positions);
 
 		}
 		else if (key[0] == 'o' || key[0] == 'O')//mark the presumed position of the atom
 		{
+			if (cursor_column == 0 or cursor_column == game_size + 1 or cursor_row == 0 or cursor_row == game_size + 1)
+			{
+				invalid_move = true;
+				continue;
+			}
 			if (presumed_positions[(cursor_row) * (game_size + 2) + (cursor_column)] == "o")
 				presumed_positions[(cursor_row) * (game_size + 2) + (cursor_column)] = ".";
 			else
 				presumed_positions[(cursor_row) * (game_size + 2) + (cursor_column)] = "o";
-			write_history(history, history_size, game_board, cursor_row, cursor_column, presumed_positions);
 			draw_board_hidden_atoms(game_board, game_size, cursor_row, cursor_column, presumed_positions);
 		}
 		else if (key[0] == 'k' || key[0] == 'K')//ends the game and allows you to display the solution
@@ -458,23 +627,33 @@ void initialize_game(string* game_board, int cursor_row, int cursor_column, int 
 			clear_screen();
 			draw_board_hidden_atoms(game_board, game_size, cursor_row, cursor_column, presumed_positions);
 		}
-		else if (key[0] == 't')
-		{
-			cout << history[0].game_board << endl;
-			cout << history[0].presumed_positions << endl;
-
-			for (int i = 0; i < history_size; i++)
-			{
-				cout << i << endl;
-				cout << history[i].game_board << endl;
-				cout << history[i].presumed_positions << endl;
-			}
-		}
 		else
 		{
 			clear_screen();
 			draw_board_hidden_atoms(game_board, game_size, cursor_row, cursor_column, presumed_positions);
 		}
+		if (invalid_move)
+		{
+			invalid_move = false;
+			continue;
+		}
+		/*history_cnt++;
+		history_index++;
+		history_index = history_index % 5;
+		if (history_index == 0)
+		{
+			history[history_index].game_board = history[4].game_board;
+			history[history_index].presumed_positions = history[4].presumed_positions;
+		}
+		else
+		{
+			history[history_index].game_board = history[history_index - 1].game_board;
+			history[history_index].presumed_positions = history[history_index - 1].presumed_positions;
+		}
+		history[history_index].cursor_row = cursor_row;
+		history[history_index].cursor_column = cursor_column;*/
+
+
 	}
 }
 
@@ -703,6 +882,7 @@ int main()
 	string* game_board = nullptr;
 	string* presumed_positions = nullptr;
 	srand(time(nullptr));
+
 	menu(game_board, presumed_positions);
 	delete[] game_board;
 	return 0;
