@@ -280,7 +280,7 @@ void shoot_beam(string*& array, const int size, const int cursor_row, const int 
 	stringstream ss;
 	ss << beam_number;
 	const string beam = ss.str();
-	// Check if the cursor is on the top side
+	//Top side
 	if (cursor_row == 0 and (cursor_column != 0 and cursor_column != size + 1))
 	{
 		bool hit = false;
@@ -295,7 +295,6 @@ void shoot_beam(string*& array, const int size, const int cursor_row, const int 
 				break;
 			}
 			//check_for_reflection(array, size, cursor_row, cursor_column, positions, beam, "top");
-			// Check if the beam hits an atom
 			if (array[i * (size + 2) + cursor_column] == "X")
 			{
 				// Mark the hit atom
@@ -305,7 +304,6 @@ void shoot_beam(string*& array, const int size, const int cursor_row, const int 
 				break;
 
 			}
-			// Check if the beam reflects from atom
 		}
 		beam_number++;
 		if (!hit)
@@ -314,7 +312,7 @@ void shoot_beam(string*& array, const int size, const int cursor_row, const int 
 			array[cursor_column + (size + 2) * (size + 1)] = beam;
 		}
 	}
-	// Check if the cursor is on the bottom side
+	//Bottom side
 	else if (cursor_row == size + 1 and (cursor_column != 0 and cursor_column != size + 1))
 	{
 		bool hit = false;
@@ -333,10 +331,11 @@ void shoot_beam(string*& array, const int size, const int cursor_row, const int 
 			if (array[i * (size + 2) + cursor_column] == "X")
 			{
 				// Mark the hit atom
-				positions[cursor_column] = h.append(beam);
+				positions[cursor_column + (size + 2) * (size + 1)] = h.append(beam);
 				array[cursor_column + (size + 2) * (size + 1)] = 'H';
 				hit = true;
 				break;
+
 			}
 			// Check if the beam reflects from atom
 		}
@@ -347,7 +346,7 @@ void shoot_beam(string*& array, const int size, const int cursor_row, const int 
 			array[cursor_column + (size + 2) * (size + 1)] = beam;
 		}
 	}
-	// Check if the cursor is on the left side
+	//Left side
 	else if (cursor_column == 0 and (cursor_row != 0 and cursor_row != size + 1))
 	{
 		bool hit = false;
@@ -363,7 +362,7 @@ void shoot_beam(string*& array, const int size, const int cursor_row, const int 
 			}
 			//check_for_reflection(array, size, cursor_row, cursor_column, positions, beam, "left");
 			// Check if the beam hits an atom
-			if (array[i * (size + 2) + cursor_column] == "X")
+			if (array[cursor_row * (size + 2)+i] == "X")
 			{
 				// Mark the hit atom
 				positions[cursor_row * (size + 2)] = h.append(beam);
@@ -376,10 +375,11 @@ void shoot_beam(string*& array, const int size, const int cursor_row, const int 
 		beam_number++;
 		if (!hit)
 		{
-			array[cursor_column] = beam;
-			array[cursor_column + (size + 2) * (size + 1)] = beam;
+			array[cursor_row * (size + 2)] = beam;
+			array[cursor_row* (size + 2)+size+1] = beam;
 		}
 	}
+	//Right side
 	else if (cursor_column == size + 1 and (cursor_row != 0 and cursor_row != size + 1))
 	{
 		bool hit = false;
@@ -395,11 +395,11 @@ void shoot_beam(string*& array, const int size, const int cursor_row, const int 
 			}
 			//check_for_reflection(array, size, cursor_row, cursor_column, positions, beam, "right");
 			// Check if the beam hits an atom
-			if (array[cursor_row + i * cursor_column] == "X")
+			if (array[cursor_row * (size + 2) + i] == "X")
 			{
 				// Mark the hit atom
-				positions[cursor_column] = h.append(beam);
-				array[cursor_column + (size + 2) * (size + 1)] = 'H';
+				positions[cursor_row * (size + 2)] = h.append(beam);
+				array[cursor_row * (size + 2)] = 'H';
 				hit = true;
 				break;
 			}
@@ -408,8 +408,8 @@ void shoot_beam(string*& array, const int size, const int cursor_row, const int 
 		beam_number++;
 		if (!hit)
 		{
-			array[cursor_column] = beam;
-			array[cursor_column + (size + 2) * (size + 1)] = beam;
+			array[cursor_row * (size + 2)] = beam;
+			array[cursor_column * (size + 1) + size + 1] = beam;
 		}
 	}
 }
@@ -508,9 +508,20 @@ void initialize_game(string* game_board, int cursor_row, int cursor_column, cons
 	{
 		invalid_move = false;
 		char key[2];
-		cin.getline(key, 2);
-		if (key[0] == '\0')
+		while (true) {
+			cout << "Enter input: ";
 			cin.getline(key, 2);
+
+			if (cin.fail() || key[0] == '\0') {
+				cin.clear();  // clear the error flag
+				cin.ignore(10, '\n');  // discard invalid input
+				cout << "Invalid input. Please try again." << std::endl;
+			}
+			else {
+				break;  // valid input, exit the loop
+			}
+		}
+
 
 		if (key[0] == 'w' || key[0] == 'W')//move up
 		{
