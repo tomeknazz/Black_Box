@@ -25,29 +25,14 @@ void clear_screen()
 
 void black_box_ascii_art()
 {
-	cout << "\033[31m" <<
-		"______  _               _     ______                _____                         \n" << "\033[0m";
-
-	cout << "\033[38;5;208m" <<
-		"| ___ \\| |             | |    | ___ \\              |  __ \\                        \n" << "\033[0m";
-
-	cout << "\033[33m" <<
-		"| |_/ /| |  __ _   ___ | | __ | |_/ /  ___  __  __ | |  \\/  __ _  _ __ ___    ___ \n" << "\033[0m";
-
-	cout << "\033[92m" <<
-		"| ___ \\| | / _` | / __|| |/ / | ___ \\ / _ \\ \\ \\/ / | | __  / _` || '_ ` _ \\  / _ \\\n" << "\033[0m";
-
-	cout << "\033[34m" <<
-		"| |_/ /| || (_| || (__ |   <  | |_/ /| (_) | >  <  | |_\\ \\| (_| || | | | | ||  __/\n" << "\033[0m";
-
-	cout << "\033[38;5;69m" <<
-		"\\____/ |_| \\__,_| \\___||_|\\_\\ \\____/  \\___/ /_/\\_\\  \\____/ \\__,_||_| |_| |_| \\___|\n" << "\033[0m";
-
-	cout << "\033[35m" <<
-		"        Tomasz Nazar                 s197613                    ACiR_3 \n" << "\033[0m";
-
-	cout <<
-		"                                                                                   \n" << "\033[0m";
+	cout << "\033[31m" << "______  _               _     ______                _____                         \n" << "\033[0m";
+	cout << "\033[38;5;208m" << "| ___ \\| |             | |    | ___ \\              |  __ \\                        \n" << "\033[0m";
+	cout << "\033[33m" << "| |_/ /| |  __ _   ___ | | __ | |_/ /  ___  __  __ | |  \\/  __ _  _ __ ___    ___ \n" << "\033[0m";
+	cout << "\033[92m" << "| ___ \\| | / _` | / __|| |/ / | ___ \\ / _ \\ \\ \\/ / | | __  / _` || '_ ` _ \\  / _ \\\n" << "\033[0m";
+	cout << "\033[34m" << "| |_/ /| || (_| || (__ |   <  | |_/ /| (_) | >  <  | |_\\ \\| (_| || | | | | ||  __/\n" << "\033[0m";
+	cout << "\033[38;5;69m" << "\\____/ |_| \\__,_| \\___||_|\\_\\ \\____/  \\___/ /_/\\_\\  \\____/ \\__,_||_| |_| |_| \\___|\n" << "\033[0m";
+	cout << "\033[35m" << "        Tomasz Nazar                 s197613                    ACiR_3 \n" << "\033[0m";
+	cout << "                                                                                   \n" << "\033[0m";
 }
 
 void end_of_game(const string* game_board, const string* presumed_positions)
@@ -156,8 +141,6 @@ void draw_board_hidden_atoms(string*& board, const int size, const int cursor_ro
 				cout << "\033[35m" << setw(4) << board[i * (size + 2) + j] << "\033[0m";
 			else
 				cout << setw(4) << board[i * (size + 2) + j];
-
-
 		}
 		cout << setw(4) << char(186);
 		if (i != size + 1)
@@ -170,7 +153,6 @@ void draw_board_hidden_atoms(string*& board, const int size, const int cursor_ro
 			}
 			cout << setw(1) << char(185);
 		}
-
 		cout << endl;
 	}
 	cout << setw(4) << char(200);
@@ -248,65 +230,6 @@ void check_for_edge_scenarios(string*& array, const int game_size, const int cur
 	}
 
 }
-
-/*void check_for_reflection(string*& array, const int game_size, const int cursor_row, const int cursor_column, string*& positions, const string& beam, const string& shot_from)
-{
-	string h = "H";
-	string r = "R";
-	if (shot_from == "top")
-	{
-		//check for hit near the edge
-		if (array[game_size + 2 + cursor_column] == "X")
-		{
-			// Mark the hit atom
-			positions[cursor_column] = h.append(beam);
-			array[cursor_column] = 'H';
-		}
-		//check for atom near the edge
-		if (array[game_size + 2 + cursor_column - 1] == "X" or array[game_size + 2 + cursor_column + 1] == "X")
-		{
-			positions[cursor_column] = r.append(beam);
-			array[cursor_column] = 'R';
-		}
-	}
-	else if (shot_from == "bottom")
-	{
-		//check for hit near the edge
-		if (array[game_size + 2 + cursor_column] == "X")
-		{
-			// Mark the hit atom
-			positions[cursor_column] = h.append(beam);
-			array[cursor_column] = 'H';
-		}
-		//check for atom near the edge
-		if (array[game_size + 2 + cursor_column - 1] == "X" or array[game_size + 2 + cursor_column + 1] == "X")
-		{
-			positions[cursor_column] = r.append(beam);
-			array[cursor_column] = 'R';
-		}
-	}
-	else if (shot_from == "left")
-	{
-		//check for hit near the edge
-		if (array[game_size + 2 + cursor_column] == "X")
-		{
-			// Mark the hit atom
-			positions[cursor_column] = h.append(beam);
-			array[cursor_column] = 'H';
-		}
-		//check for atom near the edge
-		if (array[game_size + 2 + cursor_column - 1] == "X" or array[game_size + 2 + cursor_column + 1] == "X")
-		{
-			positions[cursor_column] = r.append(beam);
-			array[cursor_column] = 'R';
-		}
-	}
-	else if (shot_from == "right")
-	{
-		//check for hit
-	}
-}
-*/
 
 void shoot_beam(string*& array, const int size, const int cursor_row, const int cursor_column, string*& positions)
 {
@@ -450,7 +373,6 @@ void draw_board_shown_atoms(const string* game_board, const int size)
 				cout << "\033[31m" << setw(4) << game_board[i * (size + 2) + j] << "\033[0m";
 			else
 				cout << setw(4) << game_board[i * (size + 2) + j];
-
 		}
 		cout << setw(4) << char(186);
 		if (i != size + 1)
@@ -472,14 +394,6 @@ void draw_board_shown_atoms(const string* game_board, const int size)
 		cout << char(196);
 	}
 	cout << setw(1) << char(188) << endl;
-}
-
-string convert_pointer_to_string(const string* pointer, const int game_size)
-{
-	string game_board;
-	for (int i = 0; i < (game_size + 2) * (game_size + 2); i++)
-		game_board += pointer[i];
-	return game_board;
 }
 
 void initialize_game(string* game_board, int cursor_row, int cursor_column, const int game_size, string* presumed_positions)
@@ -505,7 +419,6 @@ void initialize_game(string* game_board, int cursor_row, int cursor_column, cons
 			else
 				break;  // valid input, exit the loop
 		}
-
 		if (key[0] == 'w' or key[0] == 'a' or key[0] == 's' or key[0] == 'd' or key[0] == 'o' or key[0] == ' ')
 		{
 			moves[index].round = index;
@@ -554,30 +467,20 @@ void initialize_game(string* game_board, int cursor_row, int cursor_column, cons
 			}
 		}
 		else if (key[0] == 'q')//exit to main menu
-		{
 			menu(game_board, presumed_positions);
-		}
 		else if (key[0] == 'u')//undo
 		{
 			if (index == 0)
 				continue;
 			index--;
 			if (moves[index].input == 'w')
-			{
 				cursor_row++;
-			}
 			else if (moves[index].input == 's')
-			{
 				cursor_row--;
-			}
 			else if (moves[index].input == 'a')
-			{
 				cursor_column++;
-			}
 			else if (moves[index].input == 'd')
-			{
 				cursor_column--;
-			}
 			else if (moves[index].input == ' ')
 			{
 				if (cursor_row == 0 or cursor_row == game_size + 1)
@@ -649,7 +552,6 @@ void initialize_game(string* game_board, int cursor_row, int cursor_column, cons
 				presumed_positions[(cursor_row) * (game_size + 2) + (cursor_column)] = ".";
 			else
 				presumed_positions[(cursor_row) * (game_size + 2) + (cursor_column)] = "o";
-
 			draw_board_hidden_atoms(game_board, game_size, cursor_row, cursor_column, presumed_positions);
 		}
 		else if (key[0] == 'k')//ends the game and allows you to display the solution
@@ -675,7 +577,6 @@ void initialize_game(string* game_board, int cursor_row, int cursor_column, cons
 			cout << "Press enter to exit the game..." << endl;
 			cin.get();
 			end_of_game(game_board, presumed_positions);
-
 		}
 		else if (key[0] == 'p')//display the solution
 		{
@@ -693,9 +594,7 @@ void initialize_game(string* game_board, int cursor_row, int cursor_column, cons
 			draw_board_hidden_atoms(game_board, game_size, cursor_row, cursor_column, presumed_positions);
 		}
 		else
-		{
 			draw_board_hidden_atoms(game_board, game_size, cursor_row, cursor_column, presumed_positions);
-		}
 	}
 }
 
@@ -712,7 +611,6 @@ void game_choice(string* game_board, int choice, string* presumed_positions)
 		cin >> choice;
 		if (choice == 1)
 		{
-
 			clear_screen();
 			cout << "\033[33m" << "Choose number of hidden atoms: " << "\033[0m" << endl;
 			cout << "1. 3 atoms" << endl;
@@ -720,28 +618,16 @@ void game_choice(string* game_board, int choice, string* presumed_positions)
 			cout << "3. 5 atoms" << endl;
 			cout << "4. Back" << endl;
 			cin >> choice;
-			if (choice == 1)
-			{
-				create_random_game_array(game_board, 5, choice + 2);
-				presumed_positions = new string[49];
-				initialize_game(game_board, 0, 0, 5, presumed_positions);
-			}
-			else if (choice == 2)
-			{
-				create_random_game_array(game_board, 5, choice + 2);
-				presumed_positions = new string[49];
-				initialize_game(game_board, 0, 0, 5, presumed_positions);
-			}
-			else if (choice == 3)
-			{
-				create_random_game_array(game_board, 5, choice + 2);
-				presumed_positions = new string[49];
-				initialize_game(game_board, 0, 0, 5, presumed_positions);
-			}
-			else if (choice == 4)
+			if (choice == 4)
 			{
 				clear_screen();
 				menu(game_board, presumed_positions);
+			}
+			else
+			{
+				create_random_game_array(game_board, 5, choice + 2);
+				presumed_positions = new string[49];
+				initialize_game(game_board, 0, 0, 5, presumed_positions);
 			}
 		}
 		else if (choice == 2)
@@ -756,46 +642,16 @@ void game_choice(string* game_board, int choice, string* presumed_positions)
 			cout << "6. 8 atoms" << endl;
 			cout << "7. Back" << endl;
 			cin >> choice;
-			if (choice == 1)
-			{
-				create_random_game_array(game_board, 8, choice + 2);
-				presumed_positions = new string[100];
-				initialize_game(game_board, 0, 0, 8, presumed_positions);
-			}
-			else if (choice == 2)
-			{
-				create_random_game_array(game_board, 8, choice + 2);
-				presumed_positions = new string[100];
-				initialize_game(game_board, 0, 0, 8, presumed_positions);
-			}
-			else if (choice == 3)
-			{
-				create_random_game_array(game_board, 8, choice + 2);
-				presumed_positions = new string[100];
-				initialize_game(game_board, 0, 0, 8, presumed_positions);
-			}
-			else if (choice == 4)
-			{
-				create_random_game_array(game_board, 8, choice + 2);
-				presumed_positions = new string[100];
-				initialize_game(game_board, 0, 0, 8, presumed_positions);
-			}
-			else if (choice == 5)
-			{
-				create_random_game_array(game_board, 8, choice + 2);
-				presumed_positions = new string[100];
-				initialize_game(game_board, 0, 0, 8, presumed_positions);
-			}
-			else if (choice == 6)
-			{
-				create_random_game_array(game_board, 8, choice + 2);
-				presumed_positions = new string[100];
-				initialize_game(game_board, 0, 0, 8, presumed_positions);
-			}
-			else if (choice == 7)
+			if (choice == 7)
 			{
 				clear_screen();
 				menu(game_board, presumed_positions);
+			}
+			else
+			{
+				create_random_game_array(game_board, 8, choice + 2);
+				presumed_positions = new string[100];
+				initialize_game(game_board, 0, 0, 8, presumed_positions);
 			}
 		}
 		else if (choice == 3)
@@ -810,46 +666,16 @@ void game_choice(string* game_board, int choice, string* presumed_positions)
 			cout << "6. 8 atoms" << endl;
 			cout << "7. Back" << endl;
 			cin >> choice;
-			if (choice == 1)
-			{
-				create_random_game_array(game_board, 10, choice + 2);
-				presumed_positions = new string[144];
-				initialize_game(game_board, 0, 0, 10, presumed_positions);
-			}
-			else if (choice == 2)
-			{
-				create_random_game_array(game_board, 10, choice + 2);
-				presumed_positions = new string[144];
-				initialize_game(game_board, 0, 0, 10, presumed_positions);
-			}
-			else if (choice == 3)
-			{
-				create_random_game_array(game_board, 10, choice + 2);
-				presumed_positions = new string[144];
-				initialize_game(game_board, 0, 0, 10, presumed_positions);
-			}
-			else if (choice == 4)
-			{
-				create_random_game_array(game_board, 10, choice + 2);
-				presumed_positions = new string[144];
-				initialize_game(game_board, 0, 0, 10, presumed_positions);
-			}
-			else if (choice == 5)
-			{
-				create_random_game_array(game_board, 10, choice + 2);
-				presumed_positions = new string[144];
-				initialize_game(game_board, 0, 0, 10, presumed_positions);
-			}
-			else if (choice == 6)
-			{
-				create_random_game_array(game_board, 10, choice + 2);
-				presumed_positions = new string[144];
-				initialize_game(game_board, 0, 0, 10, presumed_positions);
-			}
-			else if (choice == 7)
+			if (choice == 7)
 			{
 				clear_screen();
 				menu(game_board, presumed_positions);
+			}
+			else
+			{
+				create_random_game_array(game_board, 10, choice + 2);
+				presumed_positions = new string[144];
+				initialize_game(game_board, 0, 0, 10, presumed_positions);
 			}
 		}
 		else if (choice == 4)
@@ -860,8 +686,7 @@ void game_choice(string* game_board, int choice, string* presumed_positions)
 	}
 	else if (choice == 2)
 	{
-		delete[] game_board;
-		exit(0);
+		end_of_game(game_board, presumed_positions);
 	}
 	else
 	{
@@ -876,7 +701,6 @@ int main()
 	string* presumed_positions = nullptr;
 	srand(time(nullptr));
 	menu(game_board, presumed_positions);
-	delete[] game_board;
 	return 0;
 }
 
