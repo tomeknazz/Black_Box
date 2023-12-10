@@ -273,15 +273,15 @@ void place_x_in_random_position(string*& array, const int size, const int atom_n
 	while (remaining_x > 0)
 	{
 		// Generate a random position
-		int randomPosition = rand() % (size * size) + 1;
-		int randomRow = (randomPosition - 1) / size + 1;
-		int randomCol = (randomPosition - 1) % size + 1;
+		const int random_position = rand() % (size * size) + 1;
+		const int random_row = (random_position - 1) / size + 1;
+		const int random_col = (random_position - 1) % size + 1;
 
 		// Check if dot and not X
-		if (array[randomRow * (size + 2) + randomCol] == ".")
+		if (array[random_row * (size + 2) + random_col] == ".")
 		{
 			// Place X in random position
-			array[randomRow * (size + 2) + randomCol] = "X";
+			array[random_row * (size + 2) + random_col] = "X";
 			remaining_x--;
 		}
 	}
@@ -301,15 +301,15 @@ void draw_board_hidden_atoms(string*& board, const int size, const int cursor_ro
 		for (int j = 0; j < size + 2; j++)
 		{
 			if (i == cursor_row && j == cursor_column)
-				cout << "\033[33m" << setw(4) << char(219) << "\033[0m";
+				cout << "\033[33m" << setw(4) << char(219) << "\033[0m";//yellow
 			else if (presumed_positions[i * (size + 2) + j] == "o")
-				cout << "\033[92m" << setw(4) << 'O' << "\033[0m";
+				cout << "\033[92m" << setw(4) << 'O' << "\033[0m";//green
 			else if (board[i * (size + 2) + j] == "X")
 				cout << setw(4) << '.';
 			else if (board[i * (size + 2) + j] == "H" or board[i * (size + 2) + j] == "R")
-				cout << "\033[38;5;208m" << setw(4) << presumed_positions[i * (size + 2) + j] << "\033[0m";
+				cout << "\033[38;5;208m" << setw(4) << presumed_positions[i * (size + 2) + j] << "\033[0m";//orange
 			else if (isdigit(board[i * (size + 2) + j][0]))
-				cout << "\033[35m" << setw(4) << board[i * (size + 2) + j] << "\033[0m";
+				cout << "\033[35m" << setw(4) << board[i * (size + 2) + j] << "\033[0m";//purple
 			else
 				cout << setw(4) << board[i * (size + 2) + j];
 		}
@@ -688,14 +688,14 @@ void game_choice(string* game_board, int choice, string* presumed_positions)
 
 void black_box_ascii_art()
 {
-	cout << "\033[31m" << "______  _               _     ______                _____                         \n" << "\033[0m";
-	cout << "\033[38;5;208m" << "| ___ \\| |             | |    | ___ \\              |  __ \\                        \n" << "\033[0m";
-	cout << "\033[33m" << "| |_/ /| |  __ _   ___ | | __ | |_/ /  ___  __  __ | |  \\/  __ _  _ __ ___    ___ \n" << "\033[0m";
-	cout << "\033[92m" << "| ___ \\| | / _` | / __|| |/ / | ___ \\ / _ \\ \\ \\/ / | | __  / _` || '_ ` _ \\  / _ \\\n" << "\033[0m";
-	cout << "\033[34m" << "| |_/ /| || (_| || (__ |   <  | |_/ /| (_) | >  <  | |_\\ \\| (_| || | | | | ||  __/\n" << "\033[0m";
-	cout << "\033[38;5;69m" << "\\____/ |_| \\__,_| \\___||_|\\_\\ \\____/  \\___/ /_/\\_\\  \\____/ \\__,_||_| |_| |_| \\___|\n" << "\033[0m";
-	cout << "\033[35m" << "        Tomasz Nazar                 s197613                    ACiR_3 \n" << "\033[0m";
-	cout << "                                                                                   \n" << "\033[0m";
+	cout << "\033[31m" << "______  _               _     ______                _____                         \n" << "\033[0m";//red
+	cout << "\033[38;5;208m" << "| ___ \\| |             | |    | ___ \\              |  __ \\                        \n" << "\033[0m";//orange
+	cout << "\033[33m" << "| |_/ /| |  __ _   ___ | | __ | |_/ /  ___  __  __ | |  \\/  __ _  _ __ ___    ___ \n" << "\033[0m";//yellow
+	cout << "\033[92m" << "| ___ \\| | / _` | / __|| |/ / | ___ \\ / _ \\ \\ \\/ / | | __  / _` || '_ ` _ \\  / _ \\\n" << "\033[0m";//green
+	cout << "\033[34m" << "| |_/ /| || (_| || (__ |   <  | |_/ /| (_) | >  <  | |_\\ \\| (_| || | | | | ||  __/\n" << "\033[0m";//blue
+	cout << "\033[38;5;69m" << "\\____/ |_| \\__,_| \\___||_|\\_\\ \\____/  \\___/ /_/\\_\\  \\____/ \\__,_||_| |_| |_| \\___|\n" << "\033[0m";//purple
+	cout << "\033[35m" << "        Tomasz Nazar                 s197613                    ACiR_3 \n" << "\033[0m";//pink
+	cout << "                                                                                   \n" << "\033[0m";//reset
 }
 
 void clear_screen()
@@ -724,12 +724,12 @@ void display_controls()
 void end_of_game(string*& game_board, string*& presumed_positions)
 {
 	clear_screen();
-	cout << "\033[35m" << " _____ _   _______   ___________   _____   ___  ___  ___ _____ " << "\033[0m" << endl;
-	cout << "\033[38;5;69m" << "|  ___| \\ | |  _  \\ |  _  |  ___| |  __ \\ / _ \\ |  \\/  ||  ___|" << "\033[0m" << endl;
-	cout << "\033[34m" << "| |__ |  \\| | | | | | | | | |_    | |  \\// /_\\ \\| .  . || |__  " << "\033[0m" << endl;
-	cout << "\033[92m" << "|  __|| . ` | | | | | | | |  _|   | | __ |  _  || |\\/| ||  __|" << "\033[0m" << endl;
-	cout << "\033[33m" << "| |___| |\\  | |/ /  \\ \\_/ / |     | |_\\ \\| | | || |  | || |___" << "\033[0m" << endl;
-	cout << "\033[31m" << "\\____/\\_| \\_/___/    \\___/\\_|      \\____/\\_| |_/\\_|  |_/\\____/ " << "\033[0m" << endl;
+	cout << "\033[35m" << " _____ _   _______   ___________   _____   ___  ___  ___ _____ " << "\033[0m" << endl;//purple
+	cout << "\033[38;5;69m" << "|  ___| \\ | |  _  \\ |  _  |  ___| |  __ \\ / _ \\ |  \\/  ||  ___|" << "\033[0m" << endl;//blue
+	cout << "\033[34m" << "| |__ |  \\| | | | | | | | | |_    | |  \\// /_\\ \\| .  . || |__  " << "\033[0m" << endl;//red
+	cout << "\033[92m" << "|  __|| . ` | | | | | | | |  _|   | | __ |  _  || |\\/| ||  __|" << "\033[0m" << endl;//green
+	cout << "\033[33m" << "| |___| |\\  | |/ /  \\ \\_/ / |     | |_\\ \\| | | || |  | || |___" << "\033[0m" << endl;//yellow
+	cout << "\033[31m" << "\\____/\\_| \\_/___/    \\___/\\_|      \\____/\\_| |_/\\_|  |_/\\____/ " << "\033[0m" << endl;//orange
 	delete[] game_board;
 	delete[] presumed_positions;
 	exit(0);
