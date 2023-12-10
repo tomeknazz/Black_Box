@@ -3,6 +3,7 @@
 #include <sstream>
 #include <cctype>
 #include <cstdlib>
+#include <ctime>
 
 using namespace std;
 
