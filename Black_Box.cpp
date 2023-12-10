@@ -720,7 +720,6 @@ void display_controls()
 	cout << "H - help/peek solution" << endl;
 }
 
-
 void end_of_game(string*& game_board, string*& presumed_positions)
 {
 	clear_screen();
